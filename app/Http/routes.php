@@ -11,15 +11,15 @@
 |
 */
 
-
 use App\Models\Admin;
 
 Route::get('/', function () {
-    $admini = Admin::all();
 
-    foreach($admini as $admin)
-        echo $admin->username;
+    echo 'hello';
+
 });
+
+Route::resource('oglasi', 'OglasController');
 
 
 

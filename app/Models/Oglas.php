@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Ogla
+ * Class Oglas
  */
-class Ogla extends Model
+class Oglas extends Model
 {
     protected $table = 'oglas';
 
