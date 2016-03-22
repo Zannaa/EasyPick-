@@ -4,3 +4,12 @@
 Homestead.yaml
 Homestead.json
 .env
+composer.phar
+/.idea
+/_ide_helper.php
+/build/logs
+/build/coverage
+.DS_Store
+/app/config/packages
+/public/packages
+/bootstrap/compiled.php
