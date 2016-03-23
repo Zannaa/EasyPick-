@@ -13,6 +13,8 @@
 
 use App\Models\Admin;
 
+use App\Models\Poruka;
+
 Route::get('/', function () {
 
     echo 'hello';
@@ -25,7 +27,18 @@ Route::get('oglasi/tip/{tip}', 'OglasController@poTipuOglasa');
 Route::get('oglasi/{id}/autor', 'OglasController@dajAutora');
 Route::get('oglasi/{id}/lokacija', 'OglasController@dajLokaciju');
 Route::get('oglasi/{id}/slike', 'OglasController@dajSlike');
+
+
+
+/*Poruke servis */
+Route::resource('poruke', 'PorukaController');
+Route::get('poruke/id/{id}', 'PorukaController@dajPoruku');
+Route::get('poruke/oglas/{oglas_id}' , 'PorukaController@dajPorukuOglas') ;
+
 /*
+ *
+ *
+ /*
 |--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
