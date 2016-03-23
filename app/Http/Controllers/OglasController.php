@@ -82,6 +82,27 @@ class OglasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Oglas::destroy($id);
+    }
+
+    
+    public function poTipuOglasa($tip)
+    {
+        return Oglas::where('tip_oglasa', $tip)->get();
+    }
+
+    public function dajAutora($id)
+    {
+        return Oglas::find($id)->autor;
+    }
+
+    public function dajLokaciju($id)
+    {
+        return Oglas::find($id)->lokacija;
+    }
+
+    public function dajSlike($id)
+    {
+        return Oglas::find($id)->slike;
     }
 }

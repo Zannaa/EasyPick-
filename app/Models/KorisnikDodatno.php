@@ -21,5 +21,9 @@ class KorisnikDodatno extends Model
 
     protected $guarded = [];
 
+    public function korisnik()
+    {
+        return $this->belongsTo('App\Models\Korisnik');
+    }
         
 }

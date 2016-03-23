@@ -20,5 +20,9 @@ class Slika extends Model
 
     protected $guarded = [];
 
+    public function oglas()
+    {
+        return $this->belongsTo('App\Models\Oglas');
+    }
         
 }

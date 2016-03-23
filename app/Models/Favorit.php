@@ -20,5 +20,14 @@ class Favorit extends Model
 
     protected $guarded = [];
 
-        
+    public function oglas()
+    {
+        return $this->belongsTo('App\Models\Oglas');
+    }
+
+    public function korisnik()
+    {
+        return $this->belongsTo('App\Models\Korisnik');
+    }
+    
 }

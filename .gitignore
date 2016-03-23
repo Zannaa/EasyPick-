@@ -5,7 +5,7 @@ Homestead.yaml
 Homestead.json
 .env
 composer.phar
-/.idea
+.idea/
 /_ide_helper.php
 /build/logs
 /build/coverage

@@ -25,5 +25,8 @@ class Lokacija extends Model
 
     protected $guarded = [];
 
-        
+    public function oglas()
+    {
+        return $this->hasOne('App\Models\Oglas');
+    }
 }

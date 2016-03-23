@@ -35,5 +35,23 @@ class Oglas extends Model
 
     protected $guarded = [];
 
-        
+    public function slike()
+    {
+        return $this->hasMany('App\Models\Slika');
+    }
+
+    public function favoriti()
+    {
+        return $this->hasMany('App\Models\Favorit');
+    }
+
+    public function autor()
+    {
+        return $this->belongsTo('App\Models\Korisnik', 'autor_id');
+    }
+
+    public function lokacija()
+    {
+        return $this->belongsTo('App\Models\Lokacija');
+    }
 }

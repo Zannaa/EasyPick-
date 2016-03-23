@@ -27,5 +27,19 @@ class Korisnik extends Model
 
     protected $guarded = [];
 
+    public function oglasi()
+    {
+        return $this->hasMany('App\Models\Oglas', 'autor_id');
+    }
+
+    public function favoriti()
+    {
+        return $this->hasMany('App\Models\Favorit');
+    }
+
+    public function dodatno()
+    {
+        return $this->hasOne('App\Models\KorisnikDodatno');
+    }
         
 }

@@ -19,10 +19,12 @@ Route::get('/', function () {
 
 });
 
+/*Oglasi servis*/
 Route::resource('oglasi', 'OglasController');
-
-
-
+Route::get('oglasi/tip/{tip}', 'OglasController@poTipuOglasa');
+Route::get('oglasi/{id}/autor', 'OglasController@dajAutora');
+Route::get('oglasi/{id}/lokacija', 'OglasController@dajLokaciju');
+Route::get('oglasi/{id}/slike', 'OglasController@dajSlike');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
