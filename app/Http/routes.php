@@ -40,7 +40,7 @@ Route::get('poruke/oglas/{oglas_id}' , 'PorukaController@dajPorukuOglas') ;
 Route::resource('admini', 'AdminController');
 Route::get('admini/username/{username}','AdminController@poUsername');
 Route::delete('admini/username/{username}','AdminController@brisanjePoUsername');
-
+Route::put('admini/username/{username}', 'AdminController@urediPoUsername');
 
 /*
  *
