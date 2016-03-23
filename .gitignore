@@ -6,6 +6,7 @@ Homestead.json
 .env
 composer.phar
 .idea/
+.idea/workspace.xml
 /_ide_helper.php
 /build/logs
 /build/coverage
