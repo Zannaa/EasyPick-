@@ -39,7 +39,7 @@ class Korisnik extends Model
 
     public function dodatno()
     {
-        return $this->hasOne('App\Models\KorisnikDodatno');
+        return $this->belongsTo('App\Models\KorisnikDodatno', 'korisnik_dodatno');
     }
         
 }
