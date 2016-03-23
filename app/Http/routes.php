@@ -25,6 +25,8 @@ Route::get('oglasi/tip/{tip}', 'OglasController@poTipuOglasa');
 Route::get('oglasi/{id}/autor', 'OglasController@dajAutora');
 Route::get('oglasi/{id}/lokacija', 'OglasController@dajLokaciju');
 Route::get('oglasi/{id}/slike', 'OglasController@dajSlike');
+Route::get('oglasi/{id}/slike', 'OglasController@dajSlike');
+Route::get('oglasi/{id}/favoriti', 'OglasController@dajFavorite');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

@@ -23,7 +23,7 @@ class KorisnikDodatno extends Model
 
     public function korisnik()
     {
-        return $this->hasOne('App\Models\Korisnik', 'korisnik_dodatno');
+        return $this->hasOne('App\Models\Korisnik', 'dodatno_korisnik');
     }
         
 }
