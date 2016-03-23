@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Oglas;
+use App\Models\Lokacija;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -37,7 +39,26 @@ class OglasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $oglas = new Oglas;
+        $oglas->naziv = $request->input('naziv');
+        $oglas->tip_oglasa = $request->input('tip');
+        $oglas->cijena = $request->input('cijena');
+        $oglas->povrsina = $request->input('povrsina');
+        $oglas->stanje = $request->input('stanje');
+        $oglas->opis = $request->input('opis');
+
+        $lokacija = new Lokacija;
+        $lokacija->drzava = $request->input('drzava');
+        $lokacija->kanton = $request->input('kanton');
+        $lokacija->grad = $request->input('grad');
+        $lokacija->opstina = $request->input('opstina');
+        $lokacija->adresa = $request->input('adresa');
+        $lokacija->save();
+        $oglas->lokacija_id = $lokacija->id;
+
+        $oglas->autor_id = $request->input('autor_id');
+        $oglas->datum_objave = Carbon::now();
+        $oglas->save();
     }
 
     /**
@@ -82,7 +103,9 @@ class OglasController extends Controller
      */
     public function destroy($id)
     {
-        Oglas::destroy($id);
+        $oglas = Oglas::find($id);
+        $oglas->lokacija()->delete();
+        $oglas->delete();
     }
 
     
@@ -105,4 +128,11 @@ class OglasController extends Controller
     {
         return Oglas::find($id)->slike;
     }
+
+    public function dajFavorite($id)
+    {
+        return Oglas::find($id)->favoriti;
+    }
+
+
 }

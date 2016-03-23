@@ -33,13 +33,13 @@ GET oglas po id /oglasi/{id} -uradjeno
 GET oglasi po tipu /oglasi/tip/{tip} -uradjeno
 GET autor oglasa oglasi/{id}/autor -uradjeno
 GET lokacija oglasa oglasi/{id}/lokacija -uradjeno
-POST dodavanje oglasa /oglasi
+POST dodavanje oglasa /oglasi -uradjeno
 PUT uredjivanje oglasa /oglasi/{id}
 DELETE brisanje oglasa /oglasi/{id} -uradjeno
 GET slike oglasa /oglasi/{id}/slike -uradjeno
 POST dodavanje slike /oglasi/{id}/slike
 DELETE brisanje slike po id /oglasi/{id}/slike/{slika_id}
-GET favoriti na oglasu /oglasi/{id}/favoriti
+GET favoriti na oglasu /oglasi/{id}/favoriti -uradjeno
 
 PORUKE -----------
 
