@@ -1,0 +1,56 @@
+metoda - opis - url
+
+KORISNICI--------------
+
+GET svi korisnici /korisnici
+GET korisnik po id /korisnici/{id}
+GET korisnik po email /korisnici/email/{email}
+POST dodavanje korisnika /korisnici
+PUT uredjivanje korisnika /korisnici/{id}
+PUT uredjivanje korisnika po email /korisnici/email/{email}
+DELETE brisanje korisnika /korisnici/{id}
+DELETE brisanje korisnika po email /korisnici/email/{email}
+GET svi banovani korisnici /korisnici/ban
+GET favoriti korisnika /korisnici/{id}/favoriti
+POST dodavanje favorita /korisnici/{id}/favoriti
+DELETE brisanje favorita /korisnici/{id}/favorit/{favorit_id}
+
+ADMINI----------
+
+GET svi admini /admini
+GET admin po id /admini/{id}
+GET admin po username /admini/username/{username}
+POST dodavanje admina /admini
+PUT uredjivanje admina /admini/{id}
+PUT uredjivanje admina po username /admini/username/{username}
+DELETE brisanje admina /admini/{id}
+DELETE brisanje admina po username /admini/username/{username}
+
+OGLAS -----------
+
+GET svi oglasi /oglasi -uradjeno
+GET oglas po id /oglasi/{id} -uradjeno
+GET oglasi po tipu /oglasi/tip/{tip} -uradjeno
+GET autor oglasa oglasi/{id}/autor -uradjeno
+GET lokacija oglasa oglasi/{id}/lokacija -uradjeno
+POST dodavanje oglasa /oglasi
+PUT uredjivanje oglasa /oglasi/{id}
+DELETE brisanje oglasa /oglasi/{id} -uradjeno
+GET slike oglasa /oglasi/{id}/slike -uradjeno
+POST dodavanje slike /oglasi/{id}/slike
+DELETE brisanje slike po id /oglasi/{id}/slike/{slika_id}
+GET favoriti na oglasu /oglasi/{id}/favoriti
+
+PORUKE -----------
+
+GET poruka po id /poruke/{id}
+GET poruke po oglasu /poruke/oglas/{oglas_id}
+POST dodavanje poruke /poruke/{id}
+DELETE brisanje poruke /poruke/{id}
+
+
+
+
+
+
+
