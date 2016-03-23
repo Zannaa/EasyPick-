@@ -90,7 +90,7 @@ class AdminController extends Controller
     }
 
     public function brisanjePoUsername($user){
-   //     Admin::where('username', $user)->destroy();
+        Admin::where('username', $user)->delete();
     }
 
     
