@@ -29,7 +29,7 @@ Route::get('oglasi/{id}/slike', 'OglasController@dajSlike');
 /*Admin servis*/
 Route::resource('admini', 'AdminController');
 Route::get('admini/username/{username}','AdminController@poUsername');
-Route::destroy('admini/username/{username}','AdminController@brisanjePoUsername');
+//Route::destroy('admini/username/{username}','AdminController@brisanjePoUsername');
 
 /*
 |--------------------------------------------------------------------------
