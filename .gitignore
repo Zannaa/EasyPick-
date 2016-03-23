@@ -5,8 +5,10 @@ Homestead.yaml
 Homestead.json
 .env
 composer.phar
+.idea
 .idea/
 .idea/workspace.xml
+.idea/easypick.iml
 /_ide_helper.php
 /build/logs
 /build/coverage
