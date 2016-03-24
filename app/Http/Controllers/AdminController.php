@@ -37,7 +37,13 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $admin=new Admin();
+        $admin->username= $request->input('username');
+        $admin->email= $request->input('email');
+        $admin->lozinka= $request->input('lozinka');
+        $admin->ime= $request->input('ime');
+        $admin->prezime= $request->input('prezime');
+        $admin->save();
     }
 
     /**
@@ -71,7 +77,14 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $admin= Admin::find($id);
+        $admin->username= $request->input('username');
+        $admin->email= $request->input('email');
+        $admin->lozinka= $request->input('lozinka');
+        $admin->ime= $request->input('ime');
+        $admin->prezime= $request->input('prezime');
+        $admin->save();
+
     }
 
     /**
@@ -93,6 +106,15 @@ class AdminController extends Controller
         Admin::where('username', $user)->delete();
     }
 
+    public function urediPoUsername(Request $request, $user){
+        $admin= Admin::where('username', $user);        
+        $admin->username= $request->input('username');
+        $admin->email= $request->input('email');
+        $admin->lozinka= $request->input('lozinka');
+        $admin->ime= $request->input('ime');
+        $admin->prezime= $request->input('prezime');
+        $admin->save();
+    }
     
 
 }

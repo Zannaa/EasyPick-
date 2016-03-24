@@ -44,7 +44,7 @@ GET favoriti na oglasu /oglasi/{id}/favoriti -uradjeno
 PORUKE -----------
 
 GET poruka po id /poruke/{id}
-GET poruke po oglasu /poruke/oglas/{oglas_id}
+GET poruke po oglasu /poruke/oglasi/{oglas_id}
 POST dodavanje poruke /poruke/{id}
 DELETE brisanje poruke /poruke/{id}
 
