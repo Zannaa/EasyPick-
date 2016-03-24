@@ -48,7 +48,7 @@ class KorisnikController extends Controller
      */
     public function show($id)
     {
-        //
+        return Korisnik::find($id);
     }
 
     /**
@@ -83,5 +83,10 @@ class KorisnikController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function poEmail($email)
+    {
+     return Korisnik::where('email', $email)->get();
     }
 }

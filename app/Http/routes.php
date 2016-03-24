@@ -47,7 +47,7 @@ Route::put('admini/username/{username}', 'AdminController@urediPoUsername');
 
 /*Korisnik servis*/
 Route::resource('korisnici', 'KorisnikController');
-
+Route::resource('korisnici/email/{email}', 'KorisnikController@poEmail');
 /*
  *
  *
