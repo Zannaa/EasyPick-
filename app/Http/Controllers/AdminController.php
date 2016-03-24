@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
 
@@ -75,14 +76,12 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $admin= Admin::find($id);
-        $admin->username= $request->input('username');
-        $admin->email= $request->input('email');
-        $admin->lozinka= $request->input('lozinka');
-        $admin->ime= $request->input('ime');
-        $admin->prezime= $request->input('prezime');
+        
+        $data= Input::all();
+        $admin=Admin::find($id);
+        $admin->fill($data);
         $admin->save();
 
     }
@@ -106,13 +105,11 @@ class AdminController extends Controller
         Admin::where('username', $user)->delete();
     }
 
-    public function urediPoUsername(Request $request, $user){
-        $admin= Admin::where('username', $user);        
-        $admin->username= $request->input('username');
-        $admin->email= $request->input('email');
-        $admin->lozinka= $request->input('lozinka');
-        $admin->ime= $request->input('ime');
-        $admin->prezime= $request->input('prezime');
+    public function urediPoUsername($user){
+              
+        $data= Input::all();
+        $admin=Admin::where('username', $user)->first();
+        $admin->fill($data);
         $admin->save();
     }
     
