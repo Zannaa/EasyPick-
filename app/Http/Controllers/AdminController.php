@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -38,6 +40,15 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request, [
+            'username'=>'required|max:16',
+            'email'=>'email|max:255',
+            'lozinka'=>'required|max:32',
+            'ime'=>'alpha|max:45',
+            'prezime'=>'alpha|max:45'
+        ]);
+
         $admin=new Admin();
         $admin->username= $request->input('username');
         $admin->email= $request->input('email');
@@ -45,6 +56,8 @@ class AdminController extends Controller
         $admin->ime= $request->input('ime');
         $admin->prezime= $request->input('prezime');
         $admin->save();
+
+
     }
 
     /**
@@ -78,11 +91,22 @@ class AdminController extends Controller
      */
     public function update($id)
     {
-        
-        $data= Input::all();
-        $admin=Admin::find($id);
-        $admin->fill($data);
-        $admin->save();
+        $rules=array(
+            'username'=>'required|max:16',
+            'email'=>'email|max:255',
+            'lozinka'=>'required|max:32',
+            'ime'=>'alpha|max:45',
+            'prezime'=>'alpha|max:45'
+        );
+
+        $validator= Validator::make(input::all(), $rules);
+
+        if(!$validator->fails()) {
+            $data = Input::all();
+            $admin = Admin::find($id);
+            $admin->fill($data);
+            $admin->save();
+        }
 
     }
 
@@ -106,11 +130,23 @@ class AdminController extends Controller
     }
 
     public function urediPoUsername($user){
-              
-        $data= Input::all();
-        $admin=Admin::where('username', $user)->first();
-        $admin->fill($data);
-        $admin->save();
+
+        $rules=array(
+            'username'=>'required|max:16',
+            'email'=>'email|max:255',
+            'lozinka'=>'required|max:32',
+            'ime'=>'alpha|max:45',
+            'prezime'=>'alpha|max:45'
+        );
+
+        $validator= Validator::make(input::all(), $rules);
+        
+        if(!$validator->fails()) {
+            $data = Input::all();
+            $admin = Admin::where('username', $user)->first();
+            $admin->fill($data);
+            $admin->save();
+        }
     }
     
 
