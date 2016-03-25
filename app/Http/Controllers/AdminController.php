@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -37,6 +40,15 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request, [
+            'username'=>'required|max:16',
+            'email'=>'email|max:255',
+            'lozinka'=>'required|max:32',
+            'ime'=>'alpha|max:45',
+            'prezime'=>'alpha|max:45'
+        ]);
+
         $admin=new Admin();
         $admin->username= $request->input('username');
         $admin->email= $request->input('email');
@@ -44,6 +56,8 @@ class AdminController extends Controller
         $admin->ime= $request->input('ime');
         $admin->prezime= $request->input('prezime');
         $admin->save();
+
+
     }
 
     /**
@@ -75,15 +89,24 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $admin= Admin::find($id);
-        $admin->username= $request->input('username');
-        $admin->email= $request->input('email');
-        $admin->lozinka= $request->input('lozinka');
-        $admin->ime= $request->input('ime');
-        $admin->prezime= $request->input('prezime');
-        $admin->save();
+        $rules=array(
+            'username'=>'required|max:16',
+            'email'=>'email|max:255',
+            'lozinka'=>'required|max:32',
+            'ime'=>'alpha|max:45',
+            'prezime'=>'alpha|max:45'
+        );
+
+        $validator= Validator::make(input::all(), $rules);
+
+        if(!$validator->fails()) {
+            $data = Input::all();
+            $admin = Admin::find($id);
+            $admin->fill($data);
+            $admin->save();
+        }
 
     }
 
@@ -106,14 +129,24 @@ class AdminController extends Controller
         Admin::where('username', $user)->delete();
     }
 
-    public function urediPoUsername(Request $request, $user){
-        $admin= Admin::where('username', $user);        
-        $admin->username= $request->input('username');
-        $admin->email= $request->input('email');
-        $admin->lozinka= $request->input('lozinka');
-        $admin->ime= $request->input('ime');
-        $admin->prezime= $request->input('prezime');
-        $admin->save();
+    public function urediPoUsername($user){
+
+        $rules=array(
+            'username'=>'required|max:16',
+            'email'=>'email|max:255',
+            'lozinka'=>'required|max:32',
+            'ime'=>'alpha|max:45',
+            'prezime'=>'alpha|max:45'
+        );
+
+        $validator= Validator::make(input::all(), $rules);
+        
+        if(!$validator->fails()) {
+            $data = Input::all();
+            $admin = Admin::where('username', $user)->first();
+            $admin->fill($data);
+            $admin->save();
+        }
     }
     
 
