@@ -41,5 +41,5 @@ class Korisnik extends Model
     {
         return $this->belongsTo('App\Models\KorisnikDodatno', 'dodatno_korisnik');
     }
-        
+
 }

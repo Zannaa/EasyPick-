@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Korisnik;
+use App\Models\KorisnikDodatno;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -37,7 +38,29 @@ class KorisnikController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $korisnik=new Korisnik() ;
+        $korisnik->ime=$request->ime;
+        $korisnik->prezime=$request->prezime;
+        $korisnik->email=$request->email;
+        $korisnik->lozinka=$request->lozinka;
+        $korisnik->verifikovan=$request->verifikovan;
+        $korisnik->ban=$request->ban;
+         $korisnik->vrijeme_bana=$request->vrijeme_bana;
+        $korisnik->create_time=$request->create_time;
+       
+        if (isset($request->grad) || isset($request->telefon) || isset ($request->drzava))
+
+        {
+            $dodatno=new KorisnikDodatno();
+            $dodatno->telefon=$request->telefon;
+            $dodatno->grad=$request->grad;
+            $dodatno->drzava=$request->drzava;
+            $dodatno->save();
+            $korisnik->dodatno_korisnik=$dodatno->id;
+       }
+        $korisnik->save() ;
+
+
     }
 
     /**

@@ -25,5 +25,5 @@ class KorisnikDodatno extends Model
     {
         return $this->hasOne('App\Models\Korisnik', 'dodatno_korisnik');
     }
-        
+
 }
