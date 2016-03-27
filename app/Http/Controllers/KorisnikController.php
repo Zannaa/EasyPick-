@@ -126,14 +126,5 @@ class KorisnikController extends Controller
 
     }
 
-    public function  urediPoEmailKorisnika (Request $request, $email)
-    {
-        $korisnik= Korisnik::where('email', $email)->first();
-        $input=$request->all();
-
-        $korisnik->fill($input);
-        $korisnik->save();
-
-
-    }
+   
 }
