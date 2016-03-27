@@ -47,7 +47,7 @@ class KorisnikController extends Controller
         $korisnik->ban=$request->ban;
          $korisnik->vrijeme_bana=$request->vrijeme_bana;
         $korisnik->create_time=$request->create_time;
-       
+
         if (isset($request->grad) || isset($request->telefon) || isset ($request->drzava))
 
         {
@@ -94,7 +94,11 @@ class KorisnikController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input=$request->all();
+        $korisnik=Korisnik::find($id) ;
+        $korisnik->fill($input);
+        $korisnik->save();
+
     }
 
     /**
@@ -108,8 +112,28 @@ class KorisnikController extends Controller
         //
     }
 
-    public function poEmail($email)
+    public function PoEmail($email)
     {
      return Korisnik::where('email', $email)->get();
+    }
+    public function urediPoEmail(Request $request,  $email)
+    {
+        $korisnik= Korisnik::where('email', $email)->first();
+        $input=$request->all();
+
+        $korisnik->fill($input);
+        $korisnik->save();
+
+    }
+
+    public function  urediPoEmailKorisnika (Request $request, $email)
+    {
+        $korisnik= Korisnik::where('email', $email)->first();
+        $input=$request->all();
+
+        $korisnik->fill($input);
+        $korisnik->save();
+
+
     }
 }

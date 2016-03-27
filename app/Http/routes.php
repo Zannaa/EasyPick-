@@ -47,7 +47,10 @@ Route::put('admini/username/{username}', 'AdminController@urediPoUsername');
 
 /*Korisnik servis*/
 Route::resource('korisnici', 'KorisnikController');
-Route::resource('korisnici/email/{email}', 'KorisnikController@poEmail');
+Route::get('korisnici/email/{email}', 'KorisnikController@poEmail');
+Route::put('korisnici/email/{email}', 'KorisnikController@urediPoEmail');
+Route::put('korisnici/emailkor/{email}', 'KorisnikController@urediPoEmailKorisnika');
+//Route:put('korisnici/emailkor/{email}' , 'KorisnikController@urediPoEmailKorisnika' );
 /*
  *
  *
