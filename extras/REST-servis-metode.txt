@@ -37,7 +37,7 @@ POST dodavanje oglasa /oglasi -uradjeno
 PUT uredjivanje oglasa /oglasi/{id} - uradjeno
 DELETE brisanje oglasa /oglasi/{id} -uradjeno
 GET slike oglasa /oglasi/{id}/slike -uradjeno
-POST dodavanje slike /oglasi/{id}/slike
+POST dodavanje slike /oglasi/{id}/slike - uradjeno
 DELETE brisanje slike po id /oglasi/{id}/slike/{slika_id}
 GET favoriti na oglasu /oglasi/{id}/favoriti -uradjeno
 

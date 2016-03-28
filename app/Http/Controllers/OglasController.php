@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Oglas;
 use App\Models\Lokacija;
+use App\Models\Slika;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -132,7 +133,7 @@ class OglasController extends Controller
         }
 
         $lokacija = $this->dajLokaciju($id);
-        
+
         if ($request->has('drzava')) {
             $lokacija->drzava = $request->input('drzava');
         }
@@ -218,6 +219,22 @@ class OglasController extends Controller
     public function dajSlike($id)
     {
         return Oglas::find($id)->slike;
+    }
+
+    public function dodajSliku(Request $request,  $id)
+    {
+        
+        $slika = new Slika;
+        $slika->oglas_id = $id;
+        $slika->slika = $request->input('slika');
+        $slika->save();
+
+    }
+    
+    public function obrisiSliku($id, $slika_id)
+    {
+        $slika = Slika::find($slika_id);
+        $slika->delete();
     }
 
     public function dajFavorite($id)
