@@ -15,6 +15,8 @@ use App\Models\Admin;
 
 use App\Models\Poruka;
 
+
+
 Route::get('/', function () {
 
     echo 'hello';
@@ -49,8 +51,12 @@ Route::put('admini/username/{username}', 'AdminController@urediPoUsername');
 Route::resource('korisnici', 'KorisnikController');
 Route::get('korisnici/email/{email}', 'KorisnikController@poEmail');
 Route::put('korisnici/email/{email}', 'KorisnikController@urediPoEmail');
-Route::put('korisnici/emailkor/{email}', 'KorisnikController@urediPoEmailKorisnika');
-//Route:put('korisnici/emailkor/{email}' , 'KorisnikController@urediPoEmailKorisnika' );
+Route::delete('korisnici/email/{email}','KorisnikController@brisanjePoEmail' );
+Route::get('korisnici/ban/{ban}', 'KorisnikController@poBan');
+Route::get('korisnici/{id}/favoriti', 'KorisnikController@dajFavorite');
+Route::post('korisnici/{id_korisnika}/favoriti/{id_favorita}', 'KorisnikController@dodajFavorit');
+Route::delete('korisnici/favoriti/{id_favorita}', 'KorisnikController@izbrisiFavorit');
+
 /*
  *
  *

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Korisnik;
 use App\Models\KorisnikDodatno;
 use Illuminate\Http\Request;
+use App\Models\Favorit;
 
 use App\Http\Requests;
 
@@ -109,7 +110,7 @@ class KorisnikController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Korisnik::destroy($id);
     }
 
     public function PoEmail($email)
@@ -126,5 +127,31 @@ class KorisnikController extends Controller
 
     }
 
-   
+    public function brisanjePoEmail ($email)
+    {
+        $korisnik= Korisnik::where('email', $email)->first();
+        Korisnik::destroy($korisnik->id);
+
+    }
+
+    public function dajFavorite ($id)
+    {
+        $favoriti = array();
+
+        $favoritikorisnika = Korisnik::find($id)->favoriti();
+        foreach ($favoritikorisnika as $favorit){
+            $favoriti[] = (array)$favorit;
+            }
+        return $favoriti;
+
+    }
+    public function dodajFavorit ($id_korisnika, $id_favorita) {
+        $favorit=new Favorit();
+        $favorit->korisnik_id=$id_korisnika;
+        $favorit->oglas_id=$id_favorita;
+        $favorit->save();
+    }
+    public function izbrisiFavorit ( $id_favorita) {
+       Favorit::destroy($id_favorita);
+    }
 }
