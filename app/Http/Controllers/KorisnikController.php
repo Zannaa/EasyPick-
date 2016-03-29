@@ -154,4 +154,10 @@ class KorisnikController extends Controller
     public function izbrisiFavorit ( $id_favorita) {
        Favorit::destroy($id_favorita);
     }
+
+    public function dodajBan ( $id) {
+       $korisnik= Korisnik :: find($id);
+        $korisnik->ban=1;
+        $korisnik->save();
+    }
 }

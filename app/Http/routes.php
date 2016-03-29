@@ -52,7 +52,8 @@ Route::get('korisnici/email/{email}', 'KorisnikController@poEmail');
 Route::put('korisnici/email/{email}', 'KorisnikController@urediPoEmail');
 Route::delete('korisnici/email/{email}','KorisnikController@brisanjePoEmail' );
 Route::get('korisnici/ban/{ban}', 'KorisnikController@poBan');
-Route::get('korisnici/{id}/favoriti', 'KorisnikController@dajFavorite');
+Route::post('korisnici/ban/{id}', 'KorisnikController@dodajBan');
+Route::post('korisnici/{id}/favoriti', 'KorisnikController@dajFavorite');
 Route::post('korisnici/{id_korisnika}/favoriti/{id_favorita}', 'KorisnikController@dodajFavorit');
 Route::delete('korisnici/favoriti/{id_favorita}', 'KorisnikController@izbrisiFavorit');
 
