@@ -160,4 +160,10 @@ class KorisnikController extends Controller
         $korisnik->ban=1;
         $korisnik->save();
     }
+
+    public function ukloniBan ( $id) {
+        $korisnik= Korisnik :: find($id);
+        $korisnik->ban=0;
+        $korisnik->save();
+    }
 }
