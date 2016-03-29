@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Korisnik;
+use App\User;
 use App\Models\KorisnikDodatno;
 use Illuminate\Http\Request;
 use App\Models\Favorit;
@@ -18,7 +18,7 @@ class KorisnikController extends Controller
      */
     public function index()
     {
-       return Korisnik::all() ;
+       return User::all() ;
     }
 
     /**
@@ -39,14 +39,14 @@ class KorisnikController extends Controller
      */
     public function store(Request $request)
     {
-       $korisnik=new Korisnik() ;
+        $korisnik=new User() ;
         $korisnik->ime=$request->ime;
         $korisnik->prezime=$request->prezime;
         $korisnik->email=$request->email;
         $korisnik->lozinka=$request->lozinka;
         $korisnik->verifikovan=$request->verifikovan;
         $korisnik->ban=$request->ban;
-         $korisnik->vrijeme_bana=$request->vrijeme_bana;
+        $korisnik->vrijeme_bana=$request->vrijeme_bana;
         $korisnik->create_time=$request->create_time;
 
         if (isset($request->grad) || isset($request->telefon) || isset ($request->drzava))
@@ -72,7 +72,7 @@ class KorisnikController extends Controller
      */
     public function show($id)
     {
-        return Korisnik::find($id);
+        return User::find($id);
     }
 
     /**
@@ -96,7 +96,7 @@ class KorisnikController extends Controller
     public function update(Request $request, $id)
     {
         $input=$request->all();
-        $korisnik=Korisnik::find($id) ;
+        $korisnik=User::find($id) ;
         $korisnik->fill($input);
         $korisnik->save();
 
@@ -110,16 +110,16 @@ class KorisnikController extends Controller
      */
     public function destroy($id)
     {
-        Korisnik::destroy($id);
+        User::destroy($id);
     }
 
     public function PoEmail($email)
     {
-     return Korisnik::where('email', $email)->get();
+     return User::where('email', $email)->get();
     }
     public function urediPoEmail(Request $request,  $email)
     {
-        $korisnik= Korisnik::where('email', $email)->first();
+        $korisnik= User::where('email', $email)->first();
         $input=$request->all();
 
         $korisnik->fill($input);
@@ -129,8 +129,8 @@ class KorisnikController extends Controller
 
     public function brisanjePoEmail ($email)
     {
-        $korisnik= Korisnik::where('email', $email)->first();
-        Korisnik::destroy($korisnik->id);
+        $korisnik= User::where('email', $email)->first();
+        User::destroy($korisnik->id);
 
     }
 
@@ -138,7 +138,7 @@ class KorisnikController extends Controller
     {
         $favoriti = array();
 
-        $favoritikorisnika = Korisnik::find($id)->favoriti();
+        $favoritikorisnika = User::find($id)->favoriti();
         foreach ($favoritikorisnika as $favorit){
             $favoriti[] = (array)$favorit;
             }
@@ -156,13 +156,13 @@ class KorisnikController extends Controller
     }
 
     public function dodajBan ( $id) {
-       $korisnik= Korisnik :: find($id);
+       $korisnik= User::find($id);
         $korisnik->ban=1;
         $korisnik->save();
     }
 
     public function ukloniBan ( $id) {
-        $korisnik= Korisnik :: find($id);
+        $korisnik= User::find($id);
         $korisnik->ban=0;
         $korisnik->save();
     }

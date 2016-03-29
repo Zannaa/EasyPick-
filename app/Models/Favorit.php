@@ -27,7 +27,7 @@ class Favorit extends Model
 
     public function korisnik()
     {
-        return $this->belongsTo('App\Models\Korisnik');
+        return $this->belongsTo('App\User');
     }
     
 }

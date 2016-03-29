@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Korisnik;
 use App\User;
+use App\Models\KorisnikDodatno;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -63,10 +65,24 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $dodatno = new KorisnikDodatno();
+
+        if (isset($data['telefon']) || isset($data['drzava']) || isset ($data['grad']))
+        {
+            $dodatno->telefon=$data['telefon'];
+            $dodatno->grad=$data['grad'];
+            $dodatno->drzava=$data['drzava'];
+            $dodatno->save();
+        }
+
+        $korisnik = new User();
+        $korisnik->name = $data['name'];
+        $korisnik->email = $data['email'];
+        $korisnik->password = bcrypt($data['password']);
+        $korisnik->verifikovan = 0;
+        $korisnik->dodatno_korisnik = $dodatno->id;
+        $korisnik->save();
+
+        return $korisnik;
     }
 }

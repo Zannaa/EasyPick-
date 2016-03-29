@@ -12,7 +12,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'verifikovan',
+        'ban',
+        'vrijeme_bana',
+        'dodatno_korisnik'
     ];
 
     /**
@@ -21,6 +27,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'admin'
     ];
+
+    public function oglasi()
+    {
+        return $this->hasMany('App\Models\Oglas', 'autor_id');
+    }
+
+    public function favoriti()
+    {
+        return $this->hasMany('App\Models\Favorit');
+    }
+
+    public function dodatno()
+    {
+        return $this->belongsTo('App\Models\KorisnikDodatno', 'dodatno_korisnik');
+    }
 }

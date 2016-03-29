@@ -47,7 +47,7 @@ class Oglas extends Model
 
     public function autor()
     {
-        return $this->belongsTo('App\Models\Korisnik', 'autor_id');
+        return $this->belongsTo('App\User', 'autor_id');
     }
 
     public function lokacija()
