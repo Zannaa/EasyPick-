@@ -37,13 +37,6 @@ Route::delete('oglasi/{id}/slike/{slika_id}', 'OglasController@obrisiSliku');
 Route::resource('poruke', 'PorukaController');
 Route::get('poruke/oglas/{oglas_id}' , 'PorukaController@dajPorukuOglas') ;
 
-/*Admin servis*/
-Route::resource('admini', 'AdminController');
-Route::get('admini/username/{username}','AdminController@poUsername');
-Route::delete('admini/username/{username}','AdminController@brisanjePoUsername');
-Route::put('admini/username/{username}', 'AdminController@urediPoUsername');
-
-
 /*Korisnik servis*/
 Route::post('prijava', 'KorisnikController@login');
 Route::resource('korisnici', 'KorisnikController');

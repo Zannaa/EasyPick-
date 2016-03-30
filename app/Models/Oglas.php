@@ -21,8 +21,6 @@ class Oglas extends Model
         'cijena',
         'stanje',
         'opis',
-        'lokacija_id',
-        'autor_id',
         'datum_objave',
         'grijanje',
         'struja',
