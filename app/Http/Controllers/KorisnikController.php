@@ -133,8 +133,24 @@ class KorisnikController extends Controller
         $korisnik=User::find($id) ;
 
         if($user->id == $korisnik->id || $user->admin){
-            $korisnik->fill($input);
-            $korisnik->save();
+            $korisnik->name=$request->name;
+            $korisnik->email=$request->email;
+            $korisnik->password=bcrypt($request->password);
+            $korisnik->verifikovan= 0;
+            $korisnik->ban= 0;
+
+            if (isset($request->grad) || isset($request->telefon) || isset ($request->drzava))
+
+            {
+                $dodatno= $korisnik->dodatno();
+                $dodatno->telefon=$request->telefon;
+                $dodatno->grad=$request->grad;
+                $dodatno->drzava=$request->drzava;
+                $dodatno->save();
+                $korisnik->dodatno_korisnik=$dodatno->id;
+            }
+
+            $korisnik->save() ;
             return response()->json(['success' => 'User info updated'], HttpResponse::HTTP_OK);
         }
         else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_UNAUTHORIZED);
