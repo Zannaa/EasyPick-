@@ -4,8 +4,10 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dd582622e2d02c7be3a08834b36e2807",
-    "content-hash": "4324c60d902a23907377931ad6582347",
+
+    "hash": "2def324124035636b79bdd69bd426bf0",
+    "content-hash": "dd052679088e147a9bb63ce5cea714a9",
+
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -414,16 +416,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.23",
+            "version": "v5.2.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "87c090845f135ca94eba903f1c8462e60e3a6e36"
+                "reference": "ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/87c090845f135ca94eba903f1c8462e60e3a6e36",
-                "reference": "87c090845f135ca94eba903f1c8462e60e3a6e36",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a",
+                "reference": "ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a",
                 "shasum": ""
             },
             "require": {
@@ -436,7 +438,7 @@
                 "monolog/monolog": "~1.11",
                 "mtdowling/cron-expression": "~1.0",
                 "nesbot/carbon": "~1.20",
-                "paragonie/random_compat": "~1.1",
+                "paragonie/random_compat": "~1.4",
                 "php": ">=5.5.9",
                 "psy/psysh": "0.7.*",
                 "swiftmailer/swiftmailer": "~5.1",
@@ -538,7 +540,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-03-14 14:22:33"
+            "time": "2016-03-29 13:32:58"
         },
         {
             "name": "league/flysystem",
@@ -747,6 +749,7 @@
         },
         {
             "name": "namshi/jose",
+<<<<<<< HEAD
             "version": "6.1.1",
             "source": {
                 "type": "git",
@@ -778,6 +781,33 @@
             "autoload": {
                 "psr-4": {
                     "Namshi\\JOSE\\": "src/Namshi/JOSE/"
+=======
+            "version": "5.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/namshi/jose.git",
+                "reference": "8c7eba486f74c014ea1d8faedafe5109a31ea95b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/namshi/jose/zipball/8c7eba486f74c014ea1d8faedafe5109a31ea95b",
+                "reference": "8c7eba486f74c014ea1d8faedafe5109a31ea95b",
+                "shasum": ""
+            },
+            "require": {
+                "lib-openssl": "*",
+                "php": ">=5.3.3",
+                "phpseclib/phpseclib": "~0.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Namshi\\JOSE": "src/"
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -788,10 +818,13 @@
                 {
                     "name": "Alessandro Nadalin",
                     "email": "alessandro.nadalin@gmail.com"
+<<<<<<< HEAD
                 },
                 {
                     "name": "Alessandro Cinelli (cirpo)",
                     "email": "alessandro.cinelli@gmail.com"
+=======
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
                 }
             ],
             "description": "JSON Object Signing and Encryption library for PHP.",
@@ -803,7 +836,11 @@
                 "jwt",
                 "token"
             ],
+<<<<<<< HEAD
             "time": "2016-01-24 11:10:26"
+=======
+            "time": "2015-06-29 05:41:44"
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
         },
         {
             "name": "nesbot/carbon",
@@ -905,16 +942,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v1.2.2",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "b3313b618f4edd76523572531d5d7e22fe747430"
+                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/b3313b618f4edd76523572531d5d7e22fe747430",
-                "reference": "b3313b618f4edd76523572531d5d7e22fe747430",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c7e26a21ba357863de030f0b9e701c7d04593774",
+                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774",
                 "shasum": ""
             },
             "require": {
@@ -949,7 +986,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-03-11 19:54:08"
+            "time": "2016-03-18 20:34:03"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -1002,6 +1039,7 @@
         },
         {
             "name": "phpseclib/phpseclib",
+<<<<<<< HEAD
             "version": "2.0.1",
             "source": {
                 "type": "git",
@@ -1016,11 +1054,28 @@
             },
             "require": {
                 "php": ">=5.3.3"
+=======
+            "version": "0.3.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpseclib/phpseclib.git",
+                "reference": "d15bba1edcc7c89e09cc74c5d961317a8b947bf4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/d15bba1edcc7c89e09cc74c5d961317a8b947bf4",
+                "reference": "d15bba1edcc7c89e09cc74c5d961317a8b947bf4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
             },
             "require-dev": {
                 "phing/phing": "~2.7",
                 "phpunit/phpunit": "~4.0",
                 "sami/sami": "~2.0",
+<<<<<<< HEAD
                 "squizlabs/php_codesniffer": "~2.0"
             },
             "suggest": {
@@ -1036,6 +1091,37 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
+=======
+                "squizlabs/php_codesniffer": "~1.5"
+            },
+            "suggest": {
+                "ext-gmp": "Install the GMP (GNU Multiple Precision) extension in order to speed up arbitrary precision integer arithmetic operations.",
+                "ext-mcrypt": "Install the Mcrypt extension in order to speed up a wide variety of cryptographic operations.",
+                "pear-pear/PHP_Compat": "Install PHP_Compat to get phpseclib working on PHP < 4.3.3."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Crypt": "phpseclib/",
+                    "File": "phpseclib/",
+                    "Math": "phpseclib/",
+                    "Net": "phpseclib/",
+                    "System": "phpseclib/"
+                },
+                "files": [
+                    "phpseclib/Crypt/Random.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "phpseclib/"
+            ],
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
             "license": [
                 "MIT"
             ],
@@ -1059,11 +1145,14 @@
                     "name": "Hans-Jürgen Petrich",
                     "email": "petrich@tronic-media.com",
                     "role": "Developer"
+<<<<<<< HEAD
                 },
                 {
                     "name": "Graham Campbell",
                     "email": "graham@alt-three.com",
                     "role": "Developer"
+=======
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
                 }
             ],
             "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
@@ -1087,7 +1176,11 @@
                 "x.509",
                 "x509"
             ],
+<<<<<<< HEAD
             "time": "2016-01-18 17:07:21"
+=======
+            "time": "2015-01-28 21:50:33"
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
         },
         {
             "name": "psr/log",
@@ -2088,6 +2181,7 @@
         },
         {
             "name": "tymon/jwt-auth",
+<<<<<<< HEAD
             "version": "1.0.0-alpha1",
             "source": {
                 "type": "git",
@@ -2117,16 +2211,51 @@
                 "mockery/mockery": "0.9.*",
                 "october/rain": "dev-stable",
                 "phpunit/phpunit": "^4.0 || ^5.0"
+=======
+            "version": "0.5.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tymondesigns/jwt-auth.git",
+                "reference": "18b2add90de2315d549664b4d4a062db07e8b080"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/18b2add90de2315d549664b4d4a062db07e8b080",
+                "reference": "18b2add90de2315d549664b4d4a062db07e8b080",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "~5.0",
+                "illuminate/support": "~5.0",
+                "namshi/jose": "5.0.*",
+                "nesbot/carbon": "~1.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "illuminate/auth": "~5.0",
+                "illuminate/console": "~5.0",
+                "illuminate/database": "~5.0",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.*"
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
+<<<<<<< HEAD
                     "dev-develop": "0.6-dev"
+=======
+                    "dev-develop": "0.5-dev"
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
                 }
             },
             "autoload": {
                 "psr-4": {
+<<<<<<< HEAD
                     "Tymon\\JWTAuth\\": "src/"
+=======
+                    "Tymon\\JWTAuth\\": "src"
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2137,20 +2266,35 @@
                 {
                     "name": "Sean Tymon",
                     "email": "tymon148@gmail.com",
+<<<<<<< HEAD
                     "homepage": "http://tymon.xyz",
                     "role": "Developer"
                 }
             ],
             "description": "JSON Web Token Authentication for Laravel and Lumen",
+=======
+                    "homepage": "http://tymondesigns.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "JSON Web Token Authentication for Laravel 4 and 5",
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
             "homepage": "https://github.com/tymondesigns/jwt-auth",
             "keywords": [
                 "Authentication",
                 "JSON Web Token",
                 "auth",
                 "jwt",
+<<<<<<< HEAD
                 "laravel"
             ],
             "time": "2016-03-02 20:27:02"
+=======
+                "laravel",
+                "tymon"
+            ],
+            "time": "2016-02-18 09:22:36"
+>>>>>>> 288359b136dc41655492603c153ec3c623b1c0f0
         },
         {
             "name": "vlucas/phpdotenv",

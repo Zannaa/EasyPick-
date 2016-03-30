@@ -9,7 +9,11 @@
         "laravel/framework": "5.2.*",
         "barryvdh/laravel-ide-helper": "v2.1.4",
         "ignasbernotas/laravel-model-generator": "1.1",
-        "tymon/jwt-auth": "1.0.0-alpha1"
+
+
+
+        "tymon/jwt-auth": "0.5.9"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
