@@ -165,7 +165,7 @@ class KorisnikController extends Controller
     {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
-/*
+
         $rules=array(
             'name'=>'max:32|regex:/^\w{2,}\s\w{2,}$/',
             'email'=>'email|max:255',
@@ -177,17 +177,19 @@ class KorisnikController extends Controller
 
         $validator= Validator::make(input::all(), $rules);
         $korisnik=User::find($id);
-        $dodatno=KorisnikDodatno::find($korisnik->dodatno_korisnik);
-        
-        if(!$validator->fails() && ($user->id == $korisnik->id || $user->admin)) {
+
+        if(!$validator->fails()) {
             $data = Input::all();
             $korisnik->fill($data);
-            $dodatno->fill($data);
             $korisnik->save();
+            $dodatno=KorisnikDodatno::find($korisnik->dodatno_korisnik);
+            $dodatno->fill($data);
             $dodatno->save();
-        } */
 
-        $input=$request->all();
+
+        }
+
+ /*       $input=$request->all();
         $korisnik=User::find($id) ;
 
         if($user->id == $korisnik->id || $user->admin){
@@ -213,7 +215,7 @@ class KorisnikController extends Controller
         }
         else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_UNAUTHORIZED);
 
-
+*/
     }
 
     /**
