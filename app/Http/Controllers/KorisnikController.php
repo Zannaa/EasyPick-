@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 use App\Models\Favorit;
 
 use App\Http\Requests;
+
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+
 
 class KorisnikController extends Controller
 {
@@ -67,6 +71,7 @@ class KorisnikController extends Controller
         try
         {
             $korisnik=new User() ;
+            $dodatno=new KorisnikDodatno();/*
             $korisnik->name=$request->name;
             $korisnik->email=$request->email;
             $korisnik->password=bcrypt($request->password);
@@ -76,19 +81,51 @@ class KorisnikController extends Controller
             if (isset($request->grad) || isset($request->telefon) || isset ($request->drzava))
 
             {
+                $this->validate($request, [
+                    'telefon'=>'numeric|max:45',
+                    'grad'=>'alpha|max:14',
+                    'drzava'=>'alpha|max:14'
+
+                ]);
+                
                 $dodatno=new KorisnikDodatno();
                 $dodatno->telefon=$request->telefon;
                 $dodatno->grad=$request->grad;
                 $dodatno->drzava=$request->drzava;
                 $dodatno->save();
                 $korisnik->dodatno_korisnik=$dodatno->id;
+            }   */
+
+            $rules=array(
+                'name'=>'required|max:32|regex:/^\w{2,}\s\w{2,}$/',
+                'email'=>'required|email|max:255',
+                'password'=>'required|max:32',
+                'telefon'=>'digits_between:6,15|max:45',
+                'grad'=>'alpha|max:14',
+                'drzava'=>'alpha|max:14'
+            );
+
+            $validator= Validator::make(input::all(), $rules);
+
+            if(!$validator->fails()) {
+                $data = Input::all();
+                $korisnik->fill($data);
+                $dodatno->fill($data);
+                $korisnik->password=bcrypt($request->password);
+                $dodatno->save();
+                $korisnik->dodatno_korisnik=$dodatno->id;
+                $korisnik->save();
+
             }
 
-            $korisnik->save() ;
+            //$korisnik->save() ;
         } catch (Exception $e) {
             return response()->json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
         }
+        
+           
 
+            
         $token = JWTAuth::fromUser($korisnik);
 
         return response()->json(compact('token'));
@@ -128,6 +165,27 @@ class KorisnikController extends Controller
     {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
+/*
+        $rules=array(
+            'name'=>'max:32|regex:/^\w{2,}\s\w{2,}$/',
+            'email'=>'email|max:255',
+           // 'password'=>'max:32',
+            'telefon'=>'digits_between:6,15|max:45',
+            'grad'=>'alpha|max:14',
+            'drzava'=>'alpha|max:14'
+        );
+
+        $validator= Validator::make(input::all(), $rules);
+        $korisnik=User::find($id);
+        $dodatno=KorisnikDodatno::find($korisnik->dodatno_korisnik);
+        
+        if(!$validator->fails() && ($user->id == $korisnik->id || $user->admin)) {
+            $data = Input::all();
+            $korisnik->fill($data);
+            $dodatno->fill($data);
+            $korisnik->save();
+            $dodatno->save();
+        } */
 
         $input=$request->all();
         $korisnik=User::find($id) ;
@@ -278,5 +336,14 @@ class KorisnikController extends Controller
             return response()->json(['success' => 'Ban removed'], HttpResponse::HTTP_OK);
         }
         else return response()->json(['error' => 'No authorization to remove ban'], HttpResponse::HTTP_UNAUTHORIZED);
+    }
+
+    public function dajAdmine(){
+        return User::where('admin', true)->get();
+    }
+
+    public function dajAdmina($id){
+        return User::where('admin', true)
+            ->where('id', $id)->get();
     }
 }
