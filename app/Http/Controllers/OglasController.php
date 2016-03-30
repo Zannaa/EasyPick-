@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Gate;
 
 class OglasController extends Controller
 {
@@ -102,7 +103,14 @@ class OglasController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+
+
         $oglas = Oglas::find($id);
+
+
+
+
 
         if ($request->has('naziv')) {
             $oglas->naziv = $request->input('naziv');
