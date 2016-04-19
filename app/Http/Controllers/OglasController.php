@@ -42,35 +42,18 @@ class OglasController extends Controller
             $token = JWTAuth::getToken();
             $user = JWTAuth::toUser($token);
             
-            
             $oglas = new Oglas;
-            $oglas->naziv = $request->input('naziv');
-            $oglas->tip_oglasa = $request->input('tip');
-            $oglas->cijena = $request->input('cijena');
-            $oglas->povrsina = $request->input('povrsina');
-            $oglas->stanje = $request->input('stanje');
-            $oglas->opis = $request->input('opis');
-
+            $data = Input::except('id', 'lokacija_id', 'autor_id');
+            $oglas->fill($data);
+            
             $lokacija = new Lokacija;
-            $lokacija->drzava = $request->input('drzava');
-            $lokacija->kanton = $request->input('kanton');
-            $lokacija->grad = $request->input('grad');
-            $lokacija->opstina = $request->input('opstina');
-            $lokacija->adresa = $request->input('adresa');
+            $lokacija->fill($data);
             $lokacija->save();
             $oglas->lokacija_id = $lokacija->id;
 
             $oglas->autor_id = $user->id;
             $oglas->datum_objave = Carbon::now();
-
-            $oglas->grijanje = $request->input('grijanje');
-            $oglas->struja = $request->input('struja');
-            $oglas->voda = $request->input('voda');
-            $oglas->telefon = $request->input('telefon');
-            $oglas->kablovska = $request->input('kablovska');
-            $oglas->internet = $request->input('internet');
-            $oglas->garaza = $request->input('garaza');
-
+            
             $oglas->save();
 
         } catch(Exception $e){

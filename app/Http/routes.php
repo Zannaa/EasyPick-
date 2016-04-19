@@ -19,7 +19,7 @@ use App\Models\Poruka;
 
 Route::get('/', function () {
 
-    echo 'hello';
+    return View::make('index.php');
 
 });
 
