@@ -19,7 +19,7 @@ use App\Models\Poruka;
 
 Route::get('/', function () {
 
-    echo 'hello';
+    return View::make('index.php');
 
 });
 
@@ -37,13 +37,6 @@ Route::delete('oglasi/{id}/slike/{slika_id}', 'OglasController@obrisiSliku');
 Route::resource('poruke', 'PorukaController');
 Route::get('poruke/oglas/{oglas_id}' , 'PorukaController@dajPorukuOglas') ;
 
-/*Admin servis*/
-Route::resource('admini', 'AdminController');
-Route::get('admini/username/{username}','AdminController@poUsername');
-Route::delete('admini/username/{username}','AdminController@brisanjePoUsername');
-Route::put('admini/username/{username}', 'AdminController@urediPoUsername');
-
-
 /*Korisnik servis*/
 Route::post('prijava', 'KorisnikController@login');
 Route::resource('korisnici', 'KorisnikController');
@@ -56,7 +49,8 @@ Route::delete('korisnici/ban/{id}', 'KorisnikController@ukloniBan');
 Route::post('korisnici/{id}/favoriti', 'KorisnikController@dajFavorite');
 Route::post('korisnici/{id_korisnika}/favoriti/{id_favorita}', 'KorisnikController@dodajFavorit');
 Route::delete('korisnici/favoriti/{id_favorita}', 'KorisnikController@izbrisiFavorit');
-
+Route::get('admini', 'KorisnikController@dajAdmine');
+Route::get('admini/{id}', 'KorisnikController@dajAdmina');
 /*
  *
  *

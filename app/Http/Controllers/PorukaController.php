@@ -6,9 +6,15 @@ use App\Models\Poruka;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use JWTAuth;
+use Illuminate\Http\Response as HttpResponse;
 
 class PorukaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,29 +22,30 @@ class PorukaController extends Controller
      */
     public function index()
     {
-        return Poruka::all();
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+
+        if($user->admin){
+            return Poruka::all();
+        }
+        else return response()->json(['error' => 'No authorization to see Poruke'], HttpResponse::HTTP_UNAUTHORIZED);
+
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
-    public function dajPoruku($id)
-    {
-        return Poruka::where('id', $id)->get();
-    }
-
+    
     public function dajPorukuOglas($id_oglas)
     {
-        return Poruka::where('oglas', $id_oglas)->get();
-    }
-
-    public function create()
-    {
-        //
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        $sveporuke = Poruka::where('oglas', $id_oglas)->get();
+        $poruke = array();
+        foreach ($sveporuke as $poruka){
+            if($poruka->korisnik1_id == $user->id || $poruka->korisnik2_id == $user->id || $user->admin){
+                $poruke[] = (array)$poruka;
+            }
+        }
+        if (!is_null($poruke))
+            return $poruke;
+        else return response()->json(['error' => 'No authorization to see Poruke'], HttpResponse::HTTP_UNAUTHORIZED);
     }
 
     /**
@@ -50,7 +57,6 @@ class PorukaController extends Controller
     public function store(Request $request)
     {
        $poruka=new Poruka();
-
 
         $poruka->tekst=$request->input('tekst');
         $poruka->korisnik1_id=$request->input('korisnik1_id');
@@ -67,45 +73,24 @@ class PorukaController extends Controller
      */
     public function show($id)
     {
-        return Poruka::find($id);
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        $poruka = Poruka::find($id);
+        if($poruka->korisnik1_id == $user->id || $poruka->korisnik2_id == $user->id || $user->admin){
+            return $poruka;
+        }
+        else return response()->json(['error' => 'No authorization to see Poruka'], HttpResponse::HTTP_UNAUTHORIZED);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-
-
-
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        Poruka::destroy($id);
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        $poruka = Poruka::find($id);
+        if($poruka->korisnik1_id == $user->id || $poruka->korisnik2_id == $user->id || $user->admin){
+            $poruka->delete();
+        }
+        else return response()->json(['error' => 'No authorization to delete Poruka'], HttpResponse::HTTP_UNAUTHORIZED);
     }
 }

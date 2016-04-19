@@ -1,18 +1,19 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Oglas;
 use App\Models\Lokacija;
 use App\Models\Slika;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use Illuminate\Support\Facades\Gate;
-
+use JWTAuth;
+use Illuminate\Http\Response as HttpResponse;
 class OglasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,17 +23,6 @@ class OglasController extends Controller
     {
         return Oglas::all();
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -41,37 +31,26 @@ class OglasController extends Controller
      */
     public function store(Request $request)
     {
-        $oglas = new Oglas;
-        $oglas->naziv = $request->input('naziv');
-        $oglas->tip_oglasa = $request->input('tip');
-        $oglas->cijena = $request->input('cijena');
-        $oglas->povrsina = $request->input('povrsina');
-        $oglas->stanje = $request->input('stanje');
-        $oglas->opis = $request->input('opis');
+        try{
+            $token = JWTAuth::getToken();
+            $user = JWTAuth::toUser($token);
 
-        $lokacija = new Lokacija;
-        $lokacija->drzava = $request->input('drzava');
-        $lokacija->kanton = $request->input('kanton');
-        $lokacija->grad = $request->input('grad');
-        $lokacija->opstina = $request->input('opstina');
-        $lokacija->adresa = $request->input('adresa');
-        $lokacija->save();
-        $oglas->lokacija_id = $lokacija->id;
+            $oglas = new Oglas;
+            $data = Input::except('id', 'lokacija_id', 'autor_id');
+            $oglas->fill($data);
 
-        $oglas->autor_id = $request->input('autor_id');
-        $oglas->datum_objave = Carbon::now();
+            $lokacija = new Lokacija;
+            $lokacija->fill($data);
+            $lokacija->save();
+            $oglas->lokacija_id = $lokacija->id;
+            $oglas->autor_id = $user->id;
+            $oglas->datum_objave = Carbon::now();
 
-        $oglas->grijanje = $request->input('grijanje');
-        $oglas->struja = $request->input('struja');
-        $oglas->voda = $request->input('voda');
-        $oglas->telefon = $request->input('telefon');
-        $oglas->kablovska = $request->input('kablovska');
-        $oglas->internet = $request->input('internet');
-        $oglas->garaza = $request->input('garaza');
-
-        $oglas->save();
+            $oglas->save();
+        } catch(Exception $e){
+            return response()->json(['error' => 'Error storing oglas'], HttpResponse::HTTP_CONFLICT);
+        }
     }
-
     /**
      * Display the specified resource.
      *
@@ -84,17 +63,6 @@ class OglasController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -103,98 +71,82 @@ class OglasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        try{
+            $token = JWTAuth::getToken();
+            $user = JWTAuth::toUser($token);
 
+            $oglas = Oglas::find($id);
 
+            if($user->id == $oglas->autor->id || $user->admin){
+                if ($request->has('naziv')) {
+                    $oglas->naziv = $request->input('naziv');
+                }
+                if ($request->has('tip')) {
+                    $oglas->tip_oglasa = $request->input('tip');
+                }
+                if ($request->has('status')) {
+                    $oglas->status_oglasa = $request->input('status');
+                }
+                if ($request->has('cijena')) {
+                    $oglas->cijena = $request->input('cijena');
+                }
+                if ($request->has('povrsina')) {
+                    $oglas->povrsina = $request->input('povrsina');
+                }
+                if ($request->has('stanje')) {
+                    $oglas->stanje = $request->input('stanje');
+                }
+                if ($request->has('opis')) {
+                    $oglas->opis = $request->input('opis');
+                }
+                $lokacija = $this->dajLokaciju($id);
+                if ($request->has('drzava')) {
+                    $lokacija->drzava = $request->input('drzava');
+                }
+                if ($request->has('kanton')) {
+                    $lokacija->kanton = $request->input('kanton');
+                }
+                if ($request->has('grad')) {
+                    $lokacija->grad = $request->input('grad');
+                }
+                if ($request->has('opstina')) {
+                    $lokacija->opstina = $request->input('opstina');
+                }
+                if ($request->has('adresa')) {
+                    $lokacija->adresa = $request->input('adresa');
+                }
+                if ($request->has('grijanje')) {
+                    $oglas->grijanje = $request->input('grijanje');
+                }
+                if ($request->has('struja')) {
+                    $oglas->struja = $request->input('struja');
+                }
+                if ($request->has('voda')) {
+                    $oglas->voda = $request->input('voda');
+                }
+                if ($request->has('telefon')) {
+                    $oglas->telefon = $request->input('telefon');
+                }
+                if ($request->has('kablovska')) {
+                    $oglas->kablovska = $request->input('kablovska');
+                }
+                if ($request->has('internet')) {
+                    $oglas->internet = $request->input('internet');
+                }
+                if ($request->has('garaza')) {
+                    $oglas->garaza = $request->input('garaza');
+                }
+                $lokacija->save();
+                $oglas->save();
+                return response()->json(['success' => 'Oglas info updated'], HttpResponse::HTTP_OK);
+            }
+            else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_UNAUTHORIZED);
 
-        $oglas = Oglas::find($id);
-
-
-
-
-
-        if ($request->has('naziv')) {
-            $oglas->naziv = $request->input('naziv');
+        } catch(Exception $e){
+            return response()->json(['error' => 'Error storing oglas'], HttpResponse::H);
         }
-
-        if ($request->has('tip')) {
-            $oglas->tip_oglasa = $request->input('tip');
-        }
-
-        if ($request->has('status')) {
-            $oglas->status_oglasa = $request->input('status');
-        }
-
-        if ($request->has('cijena')) {
-            $oglas->cijena = $request->input('cijena');
-        }
-
-        if ($request->has('povrsina')) {
-            $oglas->povrsina = $request->input('povrsina');
-        }
-
-        if ($request->has('stanje')) {
-            $oglas->stanje = $request->input('stanje');
-        }
-
-        if ($request->has('opis')) {
-            $oglas->opis = $request->input('opis');
-        }
-
-        $lokacija = $this->dajLokaciju($id);
-
-        if ($request->has('drzava')) {
-            $lokacija->drzava = $request->input('drzava');
-        }
-
-        if ($request->has('kanton')) {
-            $lokacija->kanton = $request->input('kanton');
-        }
-
-        if ($request->has('grad')) {
-            $lokacija->grad = $request->input('grad');
-        }
-
-        if ($request->has('opstina')) {
-            $lokacija->opstina = $request->input('opstina');
-        }
-
-        if ($request->has('adresa')) {
-            $lokacija->adresa = $request->input('adresa');
-        }
-
-        if ($request->has('grijanje')) {
-            $oglas->grijanje = $request->input('grijanje');
-        }
-
-        if ($request->has('struja')) {
-            $oglas->struja = $request->input('struja');
-        }
-
-        if ($request->has('voda')) {
-            $oglas->voda = $request->input('voda');
-        }
-
-        if ($request->has('telefon')) {
-            $oglas->telefon = $request->input('telefon');
-        }
-
-        if ($request->has('kablovska')) {
-            $oglas->kablovska = $request->input('kablovska');
-        }
-
-        if ($request->has('internet')) {
-            $oglas->internet = $request->input('internet');
-        }
-
-        if ($request->has('garaza')) {
-            $oglas->garaza = $request->input('garaza');
-        }
-
-        $lokacija->save();
-        $oglas->save();
 
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -203,52 +155,69 @@ class OglasController extends Controller
      */
     public function destroy($id)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
         $oglas = Oglas::find($id);
-        $oglas->lokacija()->delete();
-        $oglas->delete();
+        if($user->id == $oglas->autor->id || $user->admin){
+            $oglas->lokacija()->delete();
+            $oglas->delete();
+            return response()->json(['success' => 'Oglas deleted'], HttpResponse::HTTP_OK);
+        }
+        else return response()->json(['error' => 'No authorization to delete'], HttpResponse::HTTP_UNAUTHORIZED);
+
+
     }
 
-    
     public function poTipuOglasa($tip)
     {
         return Oglas::where('tip_oglasa', $tip)->get();
     }
-
     public function dajAutora($id)
     {
         return Oglas::find($id)->autor;
     }
-
     public function dajLokaciju($id)
     {
         return Oglas::find($id)->lokacija;
     }
-
     public function dajSlike($id)
     {
         return Oglas::find($id)->slike;
     }
-
     public function dodajSliku(Request $request,  $id)
     {
-        
-        $slika = new Slika;
-        $slika->oglas_id = $id;
-        $slika->slika = $request->input('slika');
-        $slika->save();
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+
+        $korisnik = Oglas::find($id)->autor;
+
+        if($user->id == $korisnik->id || $user->admin){
+            $slika = new Slika;
+            $slika->oglas_id = $id;
+            $slika->slika = $request->input('slika');
+            $slika->save();
+            return response()->json(['success' => 'Slika saved'], HttpResponse::HTTP_OK);
+        }
+        else return response()->json(['error' => 'No authorization to add Slika'], HttpResponse::HTTP_UNAUTHORIZED);
 
     }
-    
+
     public function obrisiSliku($id, $slika_id)
     {
-        $slika = Slika::find($slika_id);
-        $slika->delete();
-    }
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        $korisnik = Oglas::find($id)->autor;
+        if($user->id == $korisnik->id || $user->admin){
+            $slika = Slika::find($slika_id);
+            $slika->delete();
+            return response()->json(['success' => 'Slika deleted'], HttpResponse::HTTP_OK);
+        }
+        else return response()->json(['error' => 'No authorization to delete Slika'], HttpResponse::HTTP_UNAUTHORIZED);
 
+    }
     public function dajFavorite($id)
     {
         return Oglas::find($id)->favoriti;
     }
-
 
 }
