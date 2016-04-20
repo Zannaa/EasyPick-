@@ -9,7 +9,9 @@
         "laravel/framework": "5.2.*",
         "barryvdh/laravel-ide-helper": "v2.1.4",
         "ignasbernotas/laravel-model-generator": "1.1",
-        "tymon/jwt-auth": "0.5.9"
+        "tymon/jwt-auth": "0.5.9",
+        "google/recaptcha": "1.1.2",
+        "guzzlehttp/guzzle": "6.2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
