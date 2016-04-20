@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Favorit;
 use View;
 use App\Http\Requests;
+use ReCaptcha\ReCaptcha;
 
 use Illuminate\Support\Facades\Mail;
 use JWTAuth;
@@ -64,7 +65,22 @@ class KorisnikController extends Controller
 
     }
 
+    public function captchaCheck()
+    {
 
+        $response = Input::get('g-recaptcha-response');
+        $remoteip = $_SERVER['REMOTE_ADDR'];
+        $secret   = "6LfQyB0TAAAAANSmMx8nrWd8DzWsVx79413MJd_v";
+
+        $recaptcha = new ReCaptcha($secret);
+        $resp = $recaptcha->verify($response, $remoteip);
+        if ($resp->isSuccess()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     
     /**
      * Store a newly created resource in storage.
@@ -91,7 +107,12 @@ class KorisnikController extends Controller
             );
 
             $validator= Validator::make(Input::all(), $rules);
-
+            
+            if($this->captchaCheck() == false)
+            {
+                return response()->json(['error' => 'Captcha failed'], HttpResponse::HTTP_CONFLICT);
+            }
+            
             if(!$validator->fails()) {
                 $confirmation_code = str_random(30);
                 $data = Input::except('password', 'admin');
