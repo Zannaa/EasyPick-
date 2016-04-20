@@ -6,7 +6,6 @@ use App\User;
 use App\Models\KorisnikDodatno;
 use Illuminate\Http\Request;
 use App\Models\Favorit;
-use View;
 use App\Http\Requests;
 use ReCaptcha\ReCaptcha;
 
@@ -20,6 +19,7 @@ use Illuminate\Support\Facades\Input;
 
 class KorisnikController extends Controller
 {
+    //Autorizacija sa JSON Web Token za sve servise osim prijave, registracije i verifikacije mailom
     public function __construct()
     {
         $this->middleware('jwt.auth', ['except' => ['login', 'store', 'verifikujKorisnika']]);
@@ -35,29 +35,27 @@ class KorisnikController extends Controller
         return User::all();
     }
 
-
+    //Prijava korisnika, provjera emaila i lozinke i kreiranje tokena
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         try {
-            // verify the credentials and create a token for the user
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
-            // something went wrong
+
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        // if no errors are encountered we can return a JWT
+        // u odgovoru se vraca token
         return response()->json(compact('token'));
     }
 
-
+    //verifikacija korisnickog racuna
     public function verifikujKorisnika($konfirmacijski_kod)
     {
-
         $korisnik= User::where('konfirmacijski_kod', $konfirmacijski_kod)->first();
         $korisnik->verifikovan=1;
         $korisnik->konfirmacijski_kod=null;
@@ -65,11 +63,13 @@ class KorisnikController extends Controller
 
     }
 
+    //provjera captcha tokena koji klijentska stana salje u POST zahtjevu kod registracije
     public function captchaCheck()
-    {
+    {   
 
         $response = Input::get('g-recaptcha-response');
         $remoteip = $_SERVER['REMOTE_ADDR'];
+        //reCAPTCHA secret key
         $secret   = "6LfQyB0TAAAAANSmMx8nrWd8DzWsVx79413MJd_v";
 
         $recaptcha = new ReCaptcha($secret);
@@ -82,24 +82,19 @@ class KorisnikController extends Controller
 
     }
     
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //registracija korisnika
     public function store(Request $request)
     {
         try
         {
 
-
             $korisnik=new User();
             $dodatno=new KorisnikDodatno();
 
+            //validacija za polja kod registracije
             $rules=array(
                 'name'=>'required|max:32|regex:/^\w{2,}\s\w{2,}$/',
-                'email'=>'required|email|max:255',
+                'email'=>'required|email|max:255|unique:users',
                 'password'=>'required|min:6|max:32',
                 'telefon'=>'digits_between:6,15|max:45',
                 'grad'=>'alpha|max:14',
@@ -107,67 +102,67 @@ class KorisnikController extends Controller
             );
 
             $validator= Validator::make(Input::all(), $rules);
-            
+
+            //captcha provjera
             if($this->captchaCheck() == false)
             {
-                return response()->json(['error' => 'Captcha failed'], HttpResponse::HTTP_CONFLICT);
+                return response()->json(['error' => 'Captcha failed'], HttpResponse::HTTP_UNAUTHORIZED);
             }
-            
-            if(!$validator->fails()) {
-                $confirmation_code = str_random(30);
-                $data = Input::except('password', 'admin');
-                $korisnik->fill($data);
-                $dodatno->fill($data);
-                $korisnik->password=bcrypt($request->password);
-                $dodatno->save();
-                $korisnik->dodatno_korisnik=$dodatno->id;
-                $korisnik->konfirmacijski_kod=$confirmation_code;
-                $korisnik->save();
-                $data=['code'=>$confirmation_code] ;
-                Mail::send('emailverify', $data, function($message) use ($korisnik){
-                    $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
-                    $message->to( $korisnik->email, $korisnik->name)
-                        ->subject('Verifikujte Vašu email adresu');
-                });
-               
-               /* Mail::raw('http://localhost:8000/korisnici/verifikuj/'.$confirmation_code, function ($message) {
 
-                    $message->to('zana_14t@hotmail.com');
-                    $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
+            else{
 
-                    $message->subject('EayPick email verficiation ');
-                }); */
+                //ako su polja validna, spremi korisnika u bazu i posalji mail za verikikaciju
+                if(!$validator->fails()) {
+                    $confirmation_code = str_random(30);
+                    $data = Input::except('password', 'admin');
+                    $korisnik->fill($data);
+                    $dodatno->fill($data);
+                    $korisnik->password=bcrypt($request->password);
+                    $dodatno->save();
+                    $korisnik->dodatno_korisnik=$dodatno->id;
+                    $korisnik->konfirmacijski_kod=$confirmation_code;
+                    $korisnik->save();
+                    $data=['code'=>$confirmation_code] ;
+                    Mail::send('emailverify', $data, function($message) use ($korisnik){
+                        $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
+                        $message->to( $korisnik->email, $korisnik->name)
+                            ->subject('Verifikujte Vašu email adresu');
+                    });
+
+                    /* Mail::raw('http://localhost:8000/korisnici/verifikuj/'.$confirmation_code, function ($message) {
+
+                         $message->to('zana_14t@hotmail.com');
+                         $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
+
+                         $message->subject('EayPick email verficiation ');
+                     }); */
+                }
+                else{
+                    //POST zahtjev nepotpun ili polja nisu prosla validaciju
+                    return response()->json(['error' => 'Validation failed'], HttpResponse::HTTP_UNAUTHORIZED);
+                }
             }
+
 
         } catch (Exception $e) {
-            return response()->json(['error' => 'User already exists.'], HttpResponse::HTTP_CONFLICT);
+            return response()->json(['error' => 'Unable to register user'], HttpResponse::HTTP_CONFLICT);
         }
         
-
+        //registracija uspjesna, kreiraj token za korisnika
         $token = JWTAuth::fromUser($korisnik);
 
+        //vrati JWT
         return response()->json(compact('token'));
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //GET korisnika po ID
     public function show($id)
     {
         return User::find($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //PUT metoda, azuriranje korisnika po ID
     public function update(Request $request, $id)
     {
         $token = JWTAuth::getToken();
@@ -176,7 +171,7 @@ class KorisnikController extends Controller
         $rules=array(
             'name'=>'max:32|regex:/^[A-Za-zčČćĆšŠđĐžŽ]{2,}\s[A-Za-zčČćĆšŠđĐžŽ]{2,}$/',
             'email'=>'email|max:255',
-           // 'password'=>'max:32',
+            'password'=>'required|min:6|max:32',
             'telefon'=>'digits_between:6,15|max:45',
             'grad'=>'alpha|max:14',
             'drzava'=>'alpha|max:14'
@@ -205,19 +200,14 @@ class KorisnikController extends Controller
                 $korisnik->save();
                 return response()->json(['success' => 'User info updated'], HttpResponse::HTTP_OK);
             }
-            else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_UNAUTHORIZED);
+            else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
 
         }
 
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //DELETE korisnika po ID
     public function destroy($id)
     {
         $token = JWTAuth::getToken();
@@ -229,9 +219,10 @@ class KorisnikController extends Controller
             $korisnik->delete();
             return response()->json(['success' => 'User deleted'], HttpResponse::HTTP_OK);
         }
-        else return response()->json(['error' => 'No authorization to delete'], HttpResponse::HTTP_UNAUTHORIZED);
+        else return response()->json(['error' => 'No authorization to delete'], HttpResponse::HTTP_FORBIDDEN);
     }
 
+    //nadji korisnika po e-mailu
     public function PoEmail($email)
     {
      return User::where('email', $email)->get();
@@ -251,8 +242,7 @@ class KorisnikController extends Controller
             $korisnik->save();
             return response()->json(['success' => 'User updated'], HttpResponse::HTTP_OK);
         }
-        else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_UNAUTHORIZED);
-
+        else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
 
     }
 
@@ -267,7 +257,7 @@ class KorisnikController extends Controller
             User::destroy($korisnik->id);
             return response()->json(['success' => 'User deleted'], HttpResponse::HTTP_OK);
         }
-        else return response()->json(['error' => 'No authorization to delete'], HttpResponse::HTTP_UNAUTHORIZED);
+        else return response()->json(['error' => 'No authorization to delete'], HttpResponse::HTTP_FORBIDDEN);
 
     }
 
