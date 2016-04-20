@@ -6,9 +6,10 @@ use App\User;
 use App\Models\KorisnikDodatno;
 use Illuminate\Http\Request;
 use App\Models\Favorit;
-
+use View;
 use App\Http\Requests;
 
+use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Response as HttpResponse;
@@ -20,8 +21,9 @@ class KorisnikController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['login', 'store']]);
+        $this->middleware('jwt.auth', ['except' => ['login', 'store', 'verifikujKorisnika']]);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +31,7 @@ class KorisnikController extends Controller
      */
     public function index()
     {
-       return User::all() ;
+        return User::all();
     }
 
 
@@ -39,7 +41,7 @@ class KorisnikController extends Controller
 
         try {
             // verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
@@ -50,6 +52,19 @@ class KorisnikController extends Controller
         // if no errors are encountered we can return a JWT
         return response()->json(compact('token'));
     }
+
+
+    public function verifikujKorisnika($konfirmacijski_kod)
+    {
+
+        $korisnik= User::where('konfirmacijski_kod', $konfirmacijski_kod)->first();
+        $korisnik->verifikovan=1;
+        $korisnik->konfirmacijski_kod=null;
+        $korisnik->save();
+
+    }
+
+
     
     /**
      * Store a newly created resource in storage.
@@ -61,6 +76,7 @@ class KorisnikController extends Controller
     {
         try
         {
+
 
             $korisnik=new User();
             $dodatno=new KorisnikDodatno();
@@ -77,14 +93,29 @@ class KorisnikController extends Controller
             $validator= Validator::make(Input::all(), $rules);
 
             if(!$validator->fails()) {
+                $confirmation_code = str_random(30);
                 $data = Input::except('password', 'admin');
                 $korisnik->fill($data);
                 $dodatno->fill($data);
                 $korisnik->password=bcrypt($request->password);
                 $dodatno->save();
                 $korisnik->dodatno_korisnik=$dodatno->id;
+                $korisnik->konfirmacijski_kod=$confirmation_code;
                 $korisnik->save();
+                $data=['code'=>$confirmation_code] ;
+                Mail::send('emailverify', $data, function($message) use ($korisnik){
+                    $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
+                    $message->to( $korisnik->email, $korisnik->name)
+                        ->subject('Verifikujte Vašu email adresu');
+                });
+               
+               /* Mail::raw('http://localhost:8000/korisnici/verifikuj/'.$confirmation_code, function ($message) {
 
+                    $message->to('zana_14t@hotmail.com');
+                    $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
+
+                    $message->subject('EayPick email verficiation ');
+                }); */
             }
 
         } catch (Exception $e) {
