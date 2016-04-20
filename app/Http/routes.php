@@ -19,7 +19,7 @@ use App\Models\Poruka;
 
 Route::get('/', function () {
 
-    return View::make('index.php');
+    echo 'hello';
 
 });
 
@@ -51,6 +51,11 @@ Route::post('korisnici/{id_korisnika}/favoriti/{id_favorita}', 'KorisnikControll
 Route::delete('korisnici/favoriti/{id_favorita}', 'KorisnikController@izbrisiFavorit');
 Route::get('admini', 'KorisnikController@dajAdmine');
 Route::get('admini/{id}', 'KorisnikController@dajAdmina');
+
+
+/*Verifikacija korisničkog računa servis */
+Route::get('korisnici/verifikuj/{konfirmacijski_kod}', 'KorisnikController@verifikujKorisnika');
+
 /*
  *
  *

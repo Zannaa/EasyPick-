@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use JWTAuth;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
 
 class PorukaController extends Controller
 {
@@ -58,11 +60,23 @@ class PorukaController extends Controller
     {
        $poruka=new Poruka();
 
-        $poruka->tekst=$request->input('tekst');
-        $poruka->korisnik1_id=$request->input('korisnik1_id');
-        $poruka->korisnik2_id=$request->input('korisnik2_id');
-        $poruka->oglas=$request->input('oglas');
-        $poruka->save();
+        $rules=array(
+            'tekst'=>'required|max:256',
+            'korisnik1_id'=>'required|integer',
+            'korisnik2_id'=>'required|integer',
+            'oglas'=>'required|integer',
+
+        );
+
+        $validator= Validator::make(Input::all(), $rules); 
+        
+        if(!$validator->fails()){
+            $poruka->tekst=$request->input('tekst');
+            $poruka->korisnik1_id=$request->input('korisnik1_id');
+            $poruka->korisnik2_id=$request->input('korisnik2_id');
+            $poruka->oglas=$request->input('oglas');
+            $poruka->save();
+        }
     }
 
     /**
