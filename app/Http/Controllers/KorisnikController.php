@@ -84,7 +84,7 @@ class KorisnikController extends Controller
             $rules=array(
                 'name'=>'required|max:32|regex:/^\w{2,}\s\w{2,}$/',
                 'email'=>'required|email|max:255',
-                'password'=>'required|max:32',
+                'password'=>'required|min:6|max:32',
                 'telefon'=>'digits_between:6,15|max:45',
                 'grad'=>'alpha|max:14',
                 'drzava'=>'alpha|max:14'
@@ -153,7 +153,7 @@ class KorisnikController extends Controller
         $user = JWTAuth::toUser($token);
 
         $rules=array(
-            'name'=>'max:32|regex:/^\w{2,}\s\w{2,}$/',
+            'name'=>'max:32|regex:/^[A-Za-zčČćĆšŠđĐžŽ]{2,}\s[A-Za-zčČćĆšŠđĐžŽ]{2,}$/',
             'email'=>'email|max:255',
            // 'password'=>'max:32',
             'telefon'=>'digits_between:6,15|max:45',
@@ -188,11 +188,7 @@ class KorisnikController extends Controller
 
         }
 
- /*
 
-
-
-*/
     }
 
     /**
@@ -206,7 +202,7 @@ class KorisnikController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
 
-        $korisnik=User::find($id) ;
+        $korisnik= User::find($id);
 
         if($user->id == $korisnik->id || $user->admin){
             $korisnik->delete();
@@ -227,6 +223,7 @@ class KorisnikController extends Controller
 
         $korisnik= User::where('email', $email)->first();
         $input=$request->all();
+
 
         if($user->id == $korisnik->id || $user->admin){
             $korisnik->fill($input);

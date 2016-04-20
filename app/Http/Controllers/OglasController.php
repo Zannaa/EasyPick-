@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use JWTAuth;
 use Illuminate\Http\Response as HttpResponse;
+
+
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+
+
 class OglasController extends Controller
 {
     public function __construct()
@@ -36,6 +42,7 @@ class OglasController extends Controller
             $user = JWTAuth::toUser($token);
 
             $oglas = new Oglas;
+
             $data = Input::except('id', 'lokacija_id', 'autor_id');
             $oglas->fill($data);
 
@@ -45,6 +52,48 @@ class OglasController extends Controller
             $oglas->lokacija_id = $lokacija->id;
             $oglas->autor_id = $user->id;
             $oglas->datum_objave = Carbon::now();
+
+            $rules=array(
+                'naziv'=>'required|max:255',
+                'tip_oglasa'=>'required|max:45',
+                'status_oglasa'=>'required|alpha|max:45',
+                'povrsina'=>'integer|Min:30|Max:400',
+                'cijena'=>'required|integer|min:0|max:100000',
+                'stanje'=>'max:45',
+                'grijanje'=>'max:45',
+                'struja'=>'boolean',
+                'voda'=>'boolean',
+                'telefon'=>'boolean',
+                'kablovska'=>'boolean',
+                'internet'=>'boolean',
+                'garaza'=>'boolean',
+                'drzava'=>'max:45|regex:/^[A-Za-zčČćĆšŠđĐžŽ ]+$/',
+                'kanton'=>'max:45|alpha',
+                'grad'=>'max:45|alpha',
+                'opstina'=>'max:45|alpha',
+                'adresa'=>'max:45|regex:/^[A-Za-zčČćĆšŠđĐžŽ0-9 .]+$/'
+
+            );
+
+            $validator= Validator::make(Input::all(), $rules);
+
+            if(!$validator->fails()) {
+                $data = Input::except('id', 'lokacija_id', 'autor_id');
+                $oglas->fill($data);
+
+                $lokacija = new Lokacija;
+                $lokacija->fill($data);
+                $lokacija->save();
+                $oglas->lokacija_id = $lokacija->id;
+
+                $oglas->autor_id = $user->id;
+                $oglas->datum_objave = Carbon::now();
+
+                $oglas->save();
+
+            }
+
+
 
             $oglas->save();
         } catch(Exception $e){
@@ -78,63 +127,100 @@ class OglasController extends Controller
             $oglas = Oglas::find($id);
 
             if($user->id == $oglas->autor->id || $user->admin){
+
                 if ($request->has('naziv')) {
-                    $oglas->naziv = $request->input('naziv');
+                    $validator= Validator::make(['naziv'=>'required|max:255']);
+                    if(!$validator->fails())
+                        $oglas->naziv = $request->input('naziv');
                 }
                 if ($request->has('tip')) {
-                    $oglas->tip_oglasa = $request->input('tip');
+                    $validator= Validator::make(['tip'=>'required|max:45']);
+                    if(!$validator->fails())
+                        $oglas->tip_oglasa = $request->input('tip');
                 }
                 if ($request->has('status')) {
-                    $oglas->status_oglasa = $request->input('status');
+                    $validator= Validator::make(['status'=>'required|alpha|max:45']);
+                    if(!$validator->fails())
+                        $oglas->status_oglasa = $request->input('status');
                 }
                 if ($request->has('cijena')) {
-                    $oglas->cijena = $request->input('cijena');
+                    $validator= Validator::make(['cijena'=>'required|integer|min:0|max:100000']);
+                    if(!$validator->fails())
+                        $oglas->cijena = $request->input('cijena');
                 }
                 if ($request->has('povrsina')) {
-                    $oglas->povrsina = $request->input('povrsina');
+                    $validator= Validator::make(['povrsina'=>'required|min:30|max:400']);
+                    if(!$validator->fails())
+                        $oglas->povrsina = $request->input('povrsina');
                 }
                 if ($request->has('stanje')) {
-                    $oglas->stanje = $request->input('stanje');
+                    $validator= Validator::make(['stanje'=>'max:45']);
+                    if(!$validator->fails())
+                        $oglas->stanje = $request->input('stanje');
                 }
                 if ($request->has('opis')) {
                     $oglas->opis = $request->input('opis');
                 }
                 $lokacija = $this->dajLokaciju($id);
                 if ($request->has('drzava')) {
-                    $lokacija->drzava = $request->input('drzava');
+                    $validator= Validator::make(['drzava'=>'max:45|regex:/^[A-Za-zčČćĆšŠđĐžŽ ]+$/']);
+                    if(!$validator->fails())
+                        $lokacija->drzava = $request->input('drzava');
                 }
                 if ($request->has('kanton')) {
-                    $lokacija->kanton = $request->input('kanton');
+                    $validator= Validator::make(['kanton'=>'max:45|alpha']);
+                    if(!$validator->fails())
+                        $lokacija->kanton = $request->input('kanton');
                 }
                 if ($request->has('grad')) {
-                    $lokacija->grad = $request->input('grad');
+                    $validator= Validator::make(['grad'=>'alpha|max:45']);
+                    if(!$validator->fails())
+                        $lokacija->grad = $request->input('grad');
                 }
                 if ($request->has('opstina')) {
-                    $lokacija->opstina = $request->input('opstina');
+                    $validator= Validator::make(['opstina'=>'alpha|max:45']);
+                    if(!$validator->fails())
+                        $lokacija->opstina = $request->input('opstina');
                 }
                 if ($request->has('adresa')) {
-                    $lokacija->adresa = $request->input('adresa');
+                    $validator= Validator::make(['adresa'=>'max:45|regex:/^[A-Za-zčČćĆšŠđĐžŽ0-9 .]+$/']);
+                    if(!$validator->fails())
+                        $lokacija->adresa = $request->input('adresa');
                 }
                 if ($request->has('grijanje')) {
-                    $oglas->grijanje = $request->input('grijanje');
+                    $validator= Validator::make(['grijanje'=>'max:45']);
+                    if(!$validator->fails())
+                        $oglas->grijanje = $request->input('grijanje');
                 }
                 if ($request->has('struja')) {
-                    $oglas->struja = $request->input('struja');
+                    $validator= Validator::make(['struja'=>'boolean']);
+                    if(!$validator->fails())
+                        $oglas->struja = $request->input('struja');
                 }
                 if ($request->has('voda')) {
-                    $oglas->voda = $request->input('voda');
+                    $validator= Validator::make(['voda'=>'boolean']);
+                    if(!$validator->fails())
+                        $oglas->voda = $request->input('voda');
                 }
                 if ($request->has('telefon')) {
-                    $oglas->telefon = $request->input('telefon');
+                    $validator= Validator::make(['telefon'=>'boolean']);
+                    if(!$validator->fails())
+                        $oglas->telefon = $request->input('telefon');
                 }
                 if ($request->has('kablovska')) {
-                    $oglas->kablovska = $request->input('kablovska');
+                    $validator= Validator::make(['kablovska'=>'boolean']);
+                    if(!$validator->fails())
+                        $oglas->kablovska = $request->input('kablovska');
                 }
                 if ($request->has('internet')) {
-                    $oglas->internet = $request->input('internet');
+                    $validator= Validator::make(['internet'=>'boolean']);
+                    if(!$validator->fails())
+                        $oglas->internet = $request->input('internet');
                 }
                 if ($request->has('garaza')) {
-                    $oglas->garaza = $request->input('garaza');
+                    $validator= Validator::make(['garaza'=>'boolean']);
+                    if(!$validator->fails())
+                        $oglas->garaza = $request->input('garaza');
                 }
                 $lokacija->save();
                 $oglas->save();
