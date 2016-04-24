@@ -10,12 +10,8 @@
         "barryvdh/laravel-ide-helper": "v2.1.4",
         "ignasbernotas/laravel-model-generator": "1.1",
         "tymon/jwt-auth": "0.5.9",
+        "google/recaptcha": "1.1.2",
         "guzzlehttp/guzzle": "4.0.0"
-
-
-
-
-
 
     },
     "require-dev": {
