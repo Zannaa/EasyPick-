@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html>
 <head>
-    <meta charset="utf-8">
+    <title>Page Title</title>
 </head>
 <body>
-<h2>Verifikujte Vašu email adresu</h2>
-<div>
-    Hvala Vam što ste kreirali korisnički račun na EasyPick.Za aktivaciju kliknite na link!
 
-</div>
-<a href="http://localhost:8000/korisnici/verifikuj/<?php echo  $code; ?>">Aktivacijski link</a>
-
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
 
 </body>
 </html>
+
+

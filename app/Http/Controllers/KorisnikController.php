@@ -150,7 +150,7 @@ class KorisnikController extends Controller
                     $korisnik->save();
                     $data=['code'=>$confirmation_code] ;
                     Mail::send('emailverify', $data, function($message) use ($korisnik){
-                        $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
+                        $message->from('zanatatar7@gmail.com', 'EasyPick');
                         $message->to( $korisnik->email, $korisnik->name)
                             ->subject('Verifikujte Vašu email adresu');
                     });
@@ -360,4 +360,4 @@ class KorisnikController extends Controller
         return User::where('admin', true)
             ->where('id', $id)->get();
     }
-} 
+}
