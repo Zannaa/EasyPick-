@@ -103,32 +103,6 @@ class KorisnikController extends Controller
 
             $validator= Validator::make(Input::all(), $rules);
 
-
-            if(!$validator->fails()) {
-                $confirmation_code = str_random(30);
-                $data = Input::except('password', 'admin');
-                $korisnik->fill($data);
-                $dodatno->fill($data);
-                $korisnik->password=bcrypt($request->password);
-                $dodatno->save();
-                $korisnik->dodatno_korisnik=$dodatno->id;
-                $korisnik->konfirmacijski_kod=$confirmation_code;
-                $korisnik->save();
-                $data=['code'=>$confirmation_code] ;
-                Mail::send('emailverify', $data, function($message) use ($korisnik){
-                    $message->from('zanatatar7@gmail.com', 'EasyPick');
-                    $message->to( $korisnik->email, $korisnik->name)
-                        ->subject('Verifikujte Vašu email adresu');
-                });
-
-               /* Mail::raw('http://localhost:8000/korisnici/verifikuj/'.$confirmation_code, function ($message) {
-
-                    $message->to('zana_14t@hotmail.com');
-                    $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
-
-                    $message->subject('EayPick email verficiation ');
-                }); */
-
             //captcha provjera
             if($this->captchaCheck() == false)
             {
@@ -150,7 +124,7 @@ class KorisnikController extends Controller
                     $korisnik->save();
                     $data=['code'=>$confirmation_code] ;
                     Mail::send('emailverify', $data, function($message) use ($korisnik){
-                        $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
+                        $message->from('zanatatar7@gmail.com', 'EasyPick');
                         $message->to( $korisnik->email, $korisnik->name)
                             ->subject('Verifikujte Vašu email adresu');
                     });
@@ -171,7 +145,7 @@ class KorisnikController extends Controller
             }
 
 
-        } } catch (Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['error' => 'Unable to register user'], HttpResponse::HTTP_CONFLICT);
         }
         
