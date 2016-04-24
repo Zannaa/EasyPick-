@@ -360,4 +360,4 @@ class KorisnikController extends Controller
         return User::where('admin', true)
             ->where('id', $id)->get();
     }
-} }
+} 
