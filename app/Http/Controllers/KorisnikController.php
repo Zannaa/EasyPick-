@@ -117,26 +117,27 @@ class KorisnikController extends Controller
                     $data = Input::except('password', 'admin');
                     $korisnik->fill($data);
                     $dodatno->fill($data);
-                    $korisnik->password=bcrypt($request->password);
+                    $korisnik->password = bcrypt($request->password);
                     $dodatno->save();
-                    $korisnik->dodatno_korisnik=$dodatno->id;
-                    $korisnik->konfirmacijski_kod=$confirmation_code;
+                    $korisnik->dodatno_korisnik = $dodatno->id;
+                    $korisnik->konfirmacijski_kod = $confirmation_code;
                     $korisnik->save();
-                    $data=['code'=>$confirmation_code] ;
-                    Mail::send('emailverify', $data, function($message) use ($korisnik){
-                        $message->from('zanatatar7@gmail.com', 'EasyPick');
-                        $message->to( $korisnik->email, $korisnik->name)
-                            ->subject('Verifikujte Vašu email adresu');
+                    $data = ['code' => $confirmation_code];
+                    Mail::send('emailverify', $data, function ($message) use ($korisnik) {
+                        $message->from('zanatatar7@gmail.com', 'Zana Tatar');
+                        $message->to($korisnik->email, $korisnik->name)
+                            ->subject('Verifikacija računa');
                     });
+                }
 
-                    /* Mail::raw('http://localhost:8000/korisnici/verifikuj/'.$confirmation_code, function ($message) {
+                /*    Mail::raw('http://localhost:8000/korisnici/verifikuj/'.$confirmation_code, function ($message) use ($korisnik) {
 
-                         $message->to('zana_14t@hotmail.com');
-                         $message->from('postmaster@sandbox89dce16dbf084d70be50ee4548ae933b.mailgun.org', 'EasyPick');
+                         $message->to($korisnik->email, $korisnik->name);
+                         $message->from('@gmail.com', 'Zana Tatar');
 
                          $message->subject('EayPick email verficiation ');
-                     }); */
-                }
+                     });
+                } */
                 else{
                     //POST zahtjev nepotpun ili polja nisu prosla validaciju
                     return response()->json(['error' => 'Validation failed'], HttpResponse::HTTP_UNAUTHORIZED);
