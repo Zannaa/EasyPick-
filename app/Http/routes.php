@@ -17,11 +17,6 @@ use App\Models\Poruka;
 
 
 
-Route::get('/', function () {
-
-    echo 'hello';
-
-});
 
 
 /*Oglasi servis*/
@@ -38,7 +33,7 @@ Route::resource('poruke', 'PorukaController');
 Route::get('poruke/oglas/{oglas_id}' , 'PorukaController@dajPorukuOglas') ;
 
 /*Korisnik servis*/
-Route::post('prijava', 'KorisnikController@login');
+
 Route::resource('korisnici', 'KorisnikController');
 Route::get('korisnici/email/{email}', 'KorisnikController@poEmail');
 Route::put('korisnici/email/{email}', 'KorisnikController@urediPoEmail');
@@ -57,13 +52,10 @@ Route::get('admini/{id}', 'KorisnikController@dajAdmina');
 Route::get('korisnici/verifikuj/{konfirmacijski_kod}', 'KorisnikController@verifikujKorisnika');
 
 
-// Password reset link request routes...
-Route::get('password/email', 'Auth\PasswordController@getEmail');
-Route::post('password/email', 'Auth\PasswordController@postEmail');
 
-// Password reset routes...
-Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
-Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+
+
 /*
  *
  *
@@ -79,5 +71,28 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 */
 
 Route::group(['middleware' => ['web']], function () {
+    Route::get('/', function () {
 
+        echo 'hello';
+
+    });
+
+
+    Route::post('prijava', 'KorisnikController@login');
+
+    // Password reset link request routes...
+    Route::get('password/email', 'Auth\PasswordController@getEmail');
+    Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+    Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+    Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+    
 });
+
+Route::get('/home', 'HomeController@index');
+
+Route::auth();
+
+
