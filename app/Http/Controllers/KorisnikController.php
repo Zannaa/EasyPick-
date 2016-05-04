@@ -161,7 +161,13 @@ class KorisnikController extends Controller
     //GET korisnika po ID
     public function show($id)
     {
-        return User::find($id);
+        $user=User::find($id);
+        $dodatno=KorisnikDodatno::find($user->dodatno_korisnik);
+        //$dodatno= KorisnikDodatno::where('id', $user->dodatno_korisnik)->first();
+        $user->telefon=$dodatno->telefon;
+        $user->drzava=$dodatno->drzava;
+        $user->grad=$dodatno->grad;
+        return $user;
     }
 
     //PUT metoda, azuriranje korisnika po ID
