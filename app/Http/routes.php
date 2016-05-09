@@ -27,6 +27,7 @@ Route::get('oglasi/{id}/lokacija', 'OglasController@dajLokaciju');
 Route::get('oglasi/{id}/slike', 'OglasController@dajSlike');
 Route::post('oglasi/{id}/slike', 'OglasController@dodajSliku');
 Route::delete('oglasi/{id}/slike/{slika_id}', 'OglasController@obrisiSliku');
+Route::get('oglasi/autor/{id}', 'OglasController@dajOglaseAutora');
 
 /*Poruke servis */
 Route::resource('poruke', 'PorukaController');

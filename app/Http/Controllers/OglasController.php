@@ -254,6 +254,7 @@ class OglasController extends Controller
 
     }
 
+
     public function poTipuOglasa($tip)
     {
         return Oglas::where('tip_oglasa', $tip)->get();
@@ -304,6 +305,11 @@ class OglasController extends Controller
     public function dajFavorite($id)
     {
         return Oglas::find($id)->favoriti;
+    }
+
+    public function dajOglaseAutora($id){
+        return Oglas::where('autor_id', $id)->get();
+       
     }
 
 }
