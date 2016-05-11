@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Oglas;
 use App\User;
 use App\Models\KorisnikDodatno;
 use Illuminate\Http\Request;
 use App\Models\Favorit;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use ReCaptcha\ReCaptcha;
 
 use Illuminate\Support\Facades\Mail;
@@ -50,7 +52,7 @@ class KorisnikController extends Controller
         }
 
         // u odgovoru se vraca token
-        return response()->json(compact('token'));
+        return response()->json(compact('token', Auth::id()));
     }
 
     //verifikacija korisnickog racuna
@@ -279,6 +281,15 @@ class KorisnikController extends Controller
             }
         return $favoriti;
 
+    }
+
+    public function dajFavoriteKorisnika($id){
+        $favoriti= Favorit::where('korisnik_id', $id)->get();
+        $oglasi=array();
+        foreach ($favoriti as $favorit){
+            $oglasi[] = Oglas::find($favorit->oglas_id);
+        }
+        return $oglasi;
     }
 
     public function dodajFavorit ($id_korisnika, $id_favorita) {

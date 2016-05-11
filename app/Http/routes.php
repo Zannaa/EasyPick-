@@ -42,11 +42,12 @@ Route::delete('korisnici/email/{email}','KorisnikController@brisanjePoEmail' );
 Route::get('korisnici/ban/{ban}', 'KorisnikController@poBan');
 Route::post('korisnici/ban/{id}', 'KorisnikController@dodajBan');
 Route::delete('korisnici/ban/{id}', 'KorisnikController@ukloniBan');
-Route::post('korisnici/{id}/favoriti', 'KorisnikController@dajFavorite');
+Route::get('korisnici/{id}/favoriti', 'KorisnikController@dajFavorite');
 Route::post('korisnici/{id_korisnika}/favoriti/{id_favorita}', 'KorisnikController@dodajFavorit');
 Route::delete('korisnici/favoriti/{id_favorita}', 'KorisnikController@izbrisiFavorit');
 Route::get('admini', 'KorisnikController@dajAdmine');
 Route::get('admini/{id}', 'KorisnikController@dajAdmina');
+Route::get('korisnik/{id}/favoriti', 'KorisnikController@dajFavoriteKorisnika');
 
 
 /*Verifikacija korisničkog računa servis */

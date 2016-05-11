@@ -58,13 +58,15 @@ class PorukaController extends Controller
      */
     public function store(Request $request)
     {
-       $poruka=new Poruka();
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+
+        $poruka=new Poruka();
 
         $rules=array(
             'tekst'=>'required|max:256',
-            'korisnik1_id'=>'required|integer',
-            'korisnik2_id'=>'required|integer',
-            'oglas'=>'required|integer',
+            'oglas'=>'integer',
+            'korisnik2_id'=>'required|integer'
 
         );
 
@@ -72,7 +74,7 @@ class PorukaController extends Controller
         
         if(!$validator->fails()){
             $poruka->tekst=$request->input('tekst');
-            $poruka->korisnik1_id=$request->input('korisnik1_id');
+            $poruka->korisnik1_id=$user->id;
             $poruka->korisnik2_id=$request->input('korisnik2_id');
             $poruka->oglas=$request->input('oglas');
             $poruka->save();
