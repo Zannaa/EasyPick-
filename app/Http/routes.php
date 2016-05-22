@@ -48,6 +48,7 @@ Route::delete('korisnici/favoriti/{id_favorita}', 'KorisnikController@izbrisiFav
 Route::get('admini', 'KorisnikController@dajAdmine');
 Route::get('admini/{id}', 'KorisnikController@dajAdmina');
 Route::get('korisnik/{id}/favoriti', 'KorisnikController@dajFavoriteKorisnika');
+Route::get('korisnik', 'KorisnikController@dajTrenutnogKorisnika');
 
 
 /*Verifikacija korisničkog računa servis */
