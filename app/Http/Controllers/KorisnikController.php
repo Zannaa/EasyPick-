@@ -299,6 +299,17 @@ class KorisnikController extends Controller
         return $oglasi;
     }
 
+    public function dajFavoriteTrenutnogKorisnika(){
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        $favoriti= Favorit::where('korisnik_id', $user->id)->get();
+        $oglasi=array();
+        foreach ($favoriti as $favorit){
+            $oglasi[] = Oglas::find($favorit->oglas_id);
+        }
+        return $oglasi;
+    }
+
     public function dodajFavorit ($id_korisnika, $id_favorita) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
@@ -376,5 +387,11 @@ class KorisnikController extends Controller
             $user->grad=null;
         }
         return $user;
+    }
+
+    public function dajOglaseTKor(){
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        return Oglas::where('autor_id', $user->id)->get();
     }
 }
