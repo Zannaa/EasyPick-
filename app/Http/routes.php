@@ -58,6 +58,9 @@ Route::get('korisnici/verifikuj/{konfirmacijski_kod}', 'KorisnikController@verif
 
 
 
+
+
+
 /*
  *
  *

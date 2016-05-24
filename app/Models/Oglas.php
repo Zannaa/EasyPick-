@@ -28,7 +28,8 @@ class Oglas extends Model
         'telefon',
         'kablovska',
         'internet',
-        'garaza'
+        'garaza',
+        'slika1'
     ];
 
     protected $guarded = [];
