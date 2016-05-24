@@ -29,6 +29,7 @@ Route::post('oglasi/{id}/slike', 'OglasController@dodajSliku');
 Route::delete('oglasi/{id}/slike/{slika_id}', 'OglasController@obrisiSliku');
 Route::get('oglasi/autor/{id}', 'OglasController@dajOglaseAutora');
 
+
 /*Poruke servis */
 Route::resource('poruke', 'PorukaController');
 Route::get('poruke/oglas/{oglas_id}' , 'PorukaController@dajPorukuOglas') ;
@@ -48,6 +49,9 @@ Route::delete('korisnici/favoriti/{id_favorita}', 'KorisnikController@izbrisiFav
 Route::get('admini', 'KorisnikController@dajAdmine');
 Route::get('admini/{id}', 'KorisnikController@dajAdmina');
 Route::get('korisnik/{id}/favoriti', 'KorisnikController@dajFavoriteKorisnika');
+Route::get('korisnik/favoriti', 'KorisnikController@dajFavoriteTrenutnogKorisnika');
+Route::get('korisnik', 'KorisnikController@dajTrenutnogKorisnika');
+Route::get('korisnik/oglasi', 'KorisnikController@dajOglaseTKor');
 
 
 /*Verifikacija korisničkog računa servis */

@@ -164,11 +164,18 @@ class KorisnikController extends Controller
     public function show($id)
     {
         $user=User::find($id);
-        $dodatno=KorisnikDodatno::find($user->dodatno_korisnik);
-        //$dodatno= KorisnikDodatno::where('id', $user->dodatno_korisnik)->first();
-        $user->telefon=$dodatno->telefon;
-        $user->drzava=$dodatno->drzava;
-        $user->grad=$dodatno->grad;
+        
+        if($user->dodatno_korisnik!=null){
+            $dodatno=KorisnikDodatno::find($user->dodatno_korisnik);
+            //$dodatno= KorisnikDodatno::where('id', $user->dodatno_korisnik)->first();
+            $user->telefon=$dodatno->telefon;
+            $user->drzava=$dodatno->drzava;
+            $user->grad=$dodatno->grad;
+        }else{
+            $user->telefon=null;
+            $user->drzava=null;
+            $user->grad=null;
+        }
         return $user;
     }
 
@@ -292,6 +299,17 @@ class KorisnikController extends Controller
         return $oglasi;
     }
 
+    public function dajFavoriteTrenutnogKorisnika(){
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        $favoriti= Favorit::where('korisnik_id', $user->id)->get();
+        $oglasi=array();
+        foreach ($favoriti as $favorit){
+            $oglasi[] = Oglas::find($favorit->oglas_id);
+        }
+        return $oglasi;
+    }
+
     public function dodajFavorit ($id_korisnika, $id_favorita) {
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
@@ -351,5 +369,29 @@ class KorisnikController extends Controller
     public function dajAdmina($id){
         return User::where('admin', true)
             ->where('id', $id)->get();
+    }
+    
+    public function dajTrenutnogKorisnika(){
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        //$user=User::find($id);
+        if($user->dodatno_korisnik!=null){
+            $dodatno=KorisnikDodatno::find($user->dodatno_korisnik);
+            //$dodatno= KorisnikDodatno::where('id', $user->dodatno_korisnik)->first();
+            $user->telefon=$dodatno->telefon;
+            $user->drzava=$dodatno->drzava;
+            $user->grad=$dodatno->grad;
+        }else{
+            $user->telefon=null;
+            $user->drzava=null;
+            $user->grad=null;
+        }
+        return $user;
+    }
+
+    public function dajOglaseTKor(){
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        return Oglas::where('autor_id', $user->id)->get();
     }
 }
