@@ -9,7 +9,6 @@ use App\Http\Requests;
 use JWTAuth;
 use Illuminate\Http\Response as HttpResponse;
 
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 
@@ -307,9 +306,15 @@ class OglasController extends Controller
         return Oglas::find($id)->favoriti;
     }
 
+    
+
     public function dajOglaseAutora($id){
         return Oglas::where('autor_id', $id)->get();
        
     }
+
+    
+
+
 
 }
