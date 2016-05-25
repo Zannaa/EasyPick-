@@ -51,8 +51,9 @@ class KorisnikController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
+            $id = Auth::id();
         // u odgovoru se vraca token
-        return response()->json(compact('token', Auth::id()));
+        return response()->json(compact('token', 'id'));
     }
 
     //verifikacija korisnickog racuna
