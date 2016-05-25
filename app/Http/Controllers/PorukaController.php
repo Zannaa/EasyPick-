@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Poruka;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Collection;
 use JWTAuth;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use DB;
 
 class PorukaController extends Controller
 {
@@ -75,7 +78,9 @@ class PorukaController extends Controller
         if(!$validator->fails()){
             $poruka->tekst=$request->input('tekst');
             $poruka->korisnik1_id=$user->id;
+            $poruka->korisnik1_name = $user->name;
             $poruka->korisnik2_id=$request->input('korisnik2_id');
+            $poruka->korisnik2_name = $poruka->rcv->name;
             $poruka->oglas=$request->input('oglas');
             $poruka->save();
         }
@@ -108,5 +113,36 @@ class PorukaController extends Controller
             $poruka->delete();
         }
         else return response()->json(['error' => 'No authorization to delete Poruka'], HttpResponse::HTTP_UNAUTHORIZED);
+    }
+
+    public function dajListuZadnjihPoruka($korisnik_id)
+    {
+        $poslano = Poruka::select(DB::raw('DISTINCT(korisnik2_id)'))->where('korisnik1_id', $korisnik_id)->orderBy('created_at')->get();
+        $primljeno = Poruka::select(DB::raw('DISTINCT(korisnik1_id)'))->where('korisnik2_id', $korisnik_id)->orderBy('created_at')->get();
+        $ids = array();
+        foreach ($poslano as $id)
+            array_push($ids, $id->korisnik2_id);
+        foreach ($primljeno as $id){
+            if(!in_array($id->korisnik1_id,$ids))
+                array_push($ids, $id->korisnik1_id);
+        }
+
+        $poruke = new \Illuminate\Database\Eloquent\Collection();
+        foreach ($ids as $id){
+            $zadnjaPorukaId = Poruka::where('korisnik1_id', $id)->orWhere('korisnik2_id', $id)->max('id');
+            $zadnjaPoruka = Poruka::find($zadnjaPorukaId);
+            $poruke->add($zadnjaPoruka);
+
+        }
+
+        return $poruke;
+    }
+
+    public function dajPoruke($sen, $rec)
+    {
+        $poruke = Poruka::where('korisnik1_id', $sen)->orWhere('korisnik1_id', $rec)
+                    ->where('korisnik2_id', $sen)->orWhere('korisnik2_id', $rec)->get();
+
+        return $poruke;
     }
 }
