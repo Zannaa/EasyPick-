@@ -16,9 +16,6 @@ use App\Models\Admin;
 use App\Models\Poruka;
 
 
-
-
-
 /*Oglasi servis*/
 Route::resource('oglasi', 'OglasController');
 Route::get('oglasi/tip/{tip}', 'OglasController@poTipuOglasa');
@@ -33,6 +30,8 @@ Route::get('oglasi/autor/{id}', 'OglasController@dajOglaseAutora');
 /*Poruke servis */
 Route::resource('poruke', 'PorukaController');
 Route::get('poruke/oglas/{oglas_id}' , 'PorukaController@dajPorukuOglas') ;
+Route::get('poruke/korisnik/{korisnik_id}','PorukaController@dajListuZadnjihPoruka');
+Route::get('poruke/{sen}/{rec}', 'PorukaController@dajPoruke');
 
 /*Korisnik servis*/
 
