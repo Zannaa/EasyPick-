@@ -25,7 +25,8 @@ class User extends Authenticatable
         'telefon',
         'drzava',
         'grad',
-        'admin'
+        'admin',
+        'slika1'
     ];
 
     /**
