@@ -189,7 +189,7 @@ class KorisnikController extends Controller
         $rules=array(
             'name'=>'max:32|regex:/^[A-Za-zčČćĆšŠđĐžŽ]{2,}\s[A-Za-zčČćĆšŠđĐžŽ]{2,}$/',
             'email'=>'email|max:255',
-            'password'=>'required|min:6|max:32',
+
             'telefon'=>'digits_between:6,15|max:45',
             'grad'=>'alpha|max:14',
             'drzava'=>'alpha|max:14'
@@ -199,12 +199,12 @@ class KorisnikController extends Controller
 
         $korisnik=User::find($id);
 
-       // if(!$validator->fails()) {
+        if(!$validator->fails()) {
 
 
 
                 $data = Input::except( 'password', 'admin');
-                $korisnik->password=bcrypt($request->password);
+              ///  $korisnik->password=bcrypt($request->password);
                $korisnik->name=$request->name;
 
 
@@ -221,8 +221,8 @@ class KorisnikController extends Controller
                // $korisnik->dodatno_korisnik=$dodatno->id;
                 $korisnik->save();
                 return response()->json(['success' => 'User info updated'], HttpResponse::HTTP_OK);
-          //  }
-           // else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
+            }
+            else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
 
 
 
