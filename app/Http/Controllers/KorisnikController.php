@@ -17,7 +17,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
-
+use Log;
 
 class KorisnikController extends Controller
 {
@@ -199,28 +199,32 @@ class KorisnikController extends Controller
 
         $korisnik=User::find($id);
 
-        if(!$validator->fails()) {
+       // if(!$validator->fails()) {
 
-            if($user->id == $korisnik->id || $user->admin){
 
-                $data = Input::except('email', 'password', 'admin');
+
+                $data = Input::except( 'password', 'admin');
                 $korisnik->password=bcrypt($request->password);
-                $korisnik->fill($data);
+               $korisnik->name=$request->name;
 
-                if(isset($korisnik->dodatno_korisnik))
+
+
+               if(isset($korisnik->dodatno_korisnik))
                     $dodatno = $korisnik->dodatno;
                 else
                     $dodatno = new KorisnikDodatno();
 
-                $dodatno->fill($data);
+                $dodatno->drzava=$request->drzava;
+                $dodatno->grad=$request->grad;
+                $dodatno->telefon=$request->telefon;
                 $dodatno->save();
-                $korisnik->dodatno_korisnik=$dodatno->id;
+               // $korisnik->dodatno_korisnik=$dodatno->id;
                 $korisnik->save();
                 return response()->json(['success' => 'User info updated'], HttpResponse::HTTP_OK);
-            }
-            else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
+          //  }
+           // else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
 
-        }
+
 
 
     }
@@ -261,6 +265,22 @@ class KorisnikController extends Controller
             return response()->json(['success' => 'User updated'], HttpResponse::HTTP_OK);
         }
         else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
+
+    }
+
+    public function dodajAdmina ($id)
+    {
+        $korisnik= User::find($id);
+        $korisnik->admin=1;
+        $korisnik->save();
+
+    }
+
+    public function oduzmiAdmina ($id)
+    {
+        $korisnik= User::find($id);
+        $korisnik->admin=0;
+        $korisnik->save();
 
     }
 
