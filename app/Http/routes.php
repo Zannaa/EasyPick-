@@ -47,6 +47,8 @@ Route::post('korisnici/{id_korisnika}/favoriti/{id_favorita}', 'KorisnikControll
 Route::delete('korisnici/favoriti/{id_favorita}', 'KorisnikController@izbrisiFavorit');
 Route::get('admini', 'KorisnikController@dajAdmine');
 Route::get('admini/{id}', 'KorisnikController@dajAdmina');
+Route::post('korisnici/admini/{id}', 'KorisnikController@dodajAdmina');
+Route::delete('korisnici/admini/{id}', 'KorisnikController@oduzmiAdmina');
 Route::get('korisnik/{id}/favoriti', 'KorisnikController@dajFavoriteKorisnika');
 Route::get('korisnik/favoriti', 'KorisnikController@dajFavoriteTrenutnogKorisnika');
 Route::get('korisnik', 'KorisnikController@dajTrenutnogKorisnika');
@@ -55,6 +57,9 @@ Route::get('korisnik/oglasi', 'KorisnikController@dajOglaseTKor');
 
 /*Verifikacija korisničkog računa servis */
 Route::get('korisnici/verifikuj/{konfirmacijski_kod}', 'KorisnikController@verifikujKorisnika');
+
+
+
 
 
 

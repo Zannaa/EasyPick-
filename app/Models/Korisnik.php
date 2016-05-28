@@ -14,8 +14,7 @@ class Korisnik extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'ime',
-        'prezime',
+        'name',
         'email',
         'lozinka',
         'verifikovan',

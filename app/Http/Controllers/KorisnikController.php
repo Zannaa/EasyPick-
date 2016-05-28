@@ -17,7 +17,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
-
+use Log;
 
 class KorisnikController extends Controller
 {
@@ -189,7 +189,7 @@ class KorisnikController extends Controller
         $rules=array(
             'name'=>'max:32|regex:/^[A-Za-zčČćĆšŠđĐžŽ]{2,}\s[A-Za-zčČćĆšŠđĐžŽ]{2,}$/',
             'email'=>'email|max:255',
-            'password'=>'required|min:6|max:32',
+
             'telefon'=>'digits_between:6,15|max:45',
             'grad'=>'alpha|max:14',
             'drzava'=>'alpha|max:14'
@@ -201,26 +201,30 @@ class KorisnikController extends Controller
 
         if(!$validator->fails()) {
 
-            if($user->id == $korisnik->id || $user->admin){
 
-                $data = Input::except('email', 'password', 'admin');
-                $korisnik->password=bcrypt($request->password);
-                $korisnik->fill($data);
 
-                if(isset($korisnik->dodatno_korisnik))
+                $data = Input::except( 'password', 'admin');
+              ///  $korisnik->password=bcrypt($request->password);
+               $korisnik->name=$request->name;
+
+
+
+               if(isset($korisnik->dodatno_korisnik))
                     $dodatno = $korisnik->dodatno;
                 else
                     $dodatno = new KorisnikDodatno();
 
-                $dodatno->fill($data);
+                $dodatno->drzava=$request->drzava;
+                $dodatno->grad=$request->grad;
+                $dodatno->telefon=$request->telefon;
                 $dodatno->save();
-                $korisnik->dodatno_korisnik=$dodatno->id;
+               // $korisnik->dodatno_korisnik=$dodatno->id;
                 $korisnik->save();
                 return response()->json(['success' => 'User info updated'], HttpResponse::HTTP_OK);
             }
             else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
 
-        }
+
 
 
     }
@@ -261,6 +265,22 @@ class KorisnikController extends Controller
             return response()->json(['success' => 'User updated'], HttpResponse::HTTP_OK);
         }
         else return response()->json(['error' => 'No authorization to update'], HttpResponse::HTTP_FORBIDDEN);
+
+    }
+
+    public function dodajAdmina ($id)
+    {
+        $korisnik= User::find($id);
+        $korisnik->admin=1;
+        $korisnik->save();
+
+    }
+
+    public function oduzmiAdmina ($id)
+    {
+        $korisnik= User::find($id);
+        $korisnik->admin=0;
+        $korisnik->save();
 
     }
 
