@@ -17,6 +17,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use DB;
 
 
 class KorisnikController extends Controller
@@ -51,7 +52,13 @@ class KorisnikController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-            $id = Auth::id();
+        $id = Auth::id();
+
+        //sacuvaj podatak o prijavi u bazu, id korisnika i vrijeme prijave
+        DB::table('login')->insert(
+            ['korisnik_id' => $id]
+        );
+
         // u odgovoru se vraca token
         return response()->json(compact('token', 'id'));
     }
@@ -394,5 +401,10 @@ class KorisnikController extends Controller
         $token = JWTAuth::getToken();
         $user = JWTAuth::toUser($token);
         return Oglas::where('autor_id', $user->id)->get();
+    }
+    
+    public function dajPrijaveInfo(){
+        $prijave = DB::table('login')->select('korisnik_id','login_time')->get();
+        return $prijave;
     }
 }

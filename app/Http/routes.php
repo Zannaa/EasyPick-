@@ -51,6 +51,7 @@ Route::get('korisnik/{id}/favoriti', 'KorisnikController@dajFavoriteKorisnika');
 Route::get('korisnik/favoriti', 'KorisnikController@dajFavoriteTrenutnogKorisnika');
 Route::get('korisnik', 'KorisnikController@dajTrenutnogKorisnika');
 Route::get('korisnik/oglasi', 'KorisnikController@dajOglaseTKor');
+Route::get('prijava/info', 'KorisnikController@dajPrijaveInfo');
 
 
 /*Verifikacija korisničkog računa servis */
@@ -93,7 +94,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
     Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-    
+
 });
 
 Route::get('/home', 'HomeController@index');
