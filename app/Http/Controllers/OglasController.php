@@ -17,7 +17,7 @@ class OglasController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth');
+        $this->middleware('jwt.auth', ['except' => ['index']]);
     }
     /**
      * Display a listing of the resource.

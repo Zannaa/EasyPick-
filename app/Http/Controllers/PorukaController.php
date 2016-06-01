@@ -140,8 +140,13 @@ class PorukaController extends Controller
 
     public function dajPoruke($sen, $rec)
     {
-        $poruke = Poruka::where('korisnik1_id', $sen)->orWhere('korisnik1_id', $rec)
-                    ->where('korisnik2_id', $sen)->orWhere('korisnik2_id', $rec)->get();
+        $poruke = Poruka::where(function ($query) use ($sen,$rec) {
+                $query->where('korisnik1_id', $sen)
+                ->orWhere('korisnik1_id', $rec);
+        })->where(function ($query) use ($sen,$rec){
+            $query->where('korisnik2_id', $sen)
+                ->orWhere('korisnik2_id', $rec);
+        })->get();
 
         return $poruke;
     }
