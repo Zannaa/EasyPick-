@@ -1,0 +1,54 @@
+<div id="content">
+<header>
+<p class="pull-left">Svi oglasi</p> 
+
+ </header>
+<br><br><br>
+<div>
+
+
+<div class="row">
+<div class="col-md-3">
+     Naslov
+      </div>
+
+      <div class="col-md-3">
+     Datum objave
+      </div>
+       <div class="col-md-5">
+     Akcije
+      </div>
+   <hr>
+
+</div>
+<div class="row"  ng-repeat="oglas in oglasi.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	 
+       <div class="col-md-3">
+     <p> {{oglas.naziv}}</p>
+     
+      </div>
+       <div class="col-md-3">
+     <p> {{oglas.datum_objave}}</p>
+     
+      </div>
+     
+      <div class="col-md-5">
+
+
+           
+         <button class="btn btn-danger btn-xs " ng-click=izbrisioglas(oglas.id)>Izbrisi </button>
+      
+      </div>
+
+
+
+
+
+
+
+</div>
+<hr>
+</div>
+<div>
+<uib-pagination boundary-links="true" total-items="totalItems"  items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm pozicijapaginacije" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+</div>

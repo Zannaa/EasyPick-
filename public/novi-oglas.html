@@ -1,0 +1,115 @@
+<section class="section-novi-oglas">
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  	<div class="panel panel-default">
+    <div class="panel-body">
+      <div class="form-container">
+      	<form name="noviOglasForm" role="form" ng-controller="OglasController as oglasCtrl" ng-submit="noviOglasForm.$valid && oglasCtrl.objaviOglas()" novalidate>
+      	  <h4>Naslov oglasa</h4>
+       	  <div class="form-group">
+	          <input type="text" name="naslov" class="form-control" ng-model="oglasCtrl.oglas.naslov" required />
+	          <div class="form-error" ng-show="noviOglasForm.$submitted && noviOglasForm.naslov.$error.required">
+	            <small>Unesite naslov oglasa</small>
+	          </div>
+          </div>
+          <h4>Tip nekretnine</h4>
+         <div class="form-group">
+	         <div class="btn-group">
+	        <label class="btn btn-primary" ng-model="oglasCtrl.oglas.tip" uib-btn-radio="'Kuca'">Kuća</label>
+	        <label class="btn btn-primary" ng-model="oglasCtrl.oglas.tip" uib-btn-radio="'Stan'">Stan</label>
+	        <label class="btn btn-primary" ng-model="oglasCtrl.oglas.tip" uib-btn-radio="'Soba'">Soba</label>
+	    	</div>
+		</div>
+		<h4>Površina</h4>
+		<div class="form-group">
+			<div class="input-group">
+			  <input type="number" class="form-control" ng-model="oglasCtrl.oglas.povrsina" aria-describedby="basic-addon2">
+			  <span class="input-group-addon" id="basic-addon2">m2</span>
+			</div>
+		</div>
+		<h4>Cijena</h4>
+		<div class="form-group">
+			<div class="input-group">
+			  <input type="number" class="form-control" ng-model="oglasCtrl.oglas.cijena" aria-describedby="basic-addon2">
+			  <span class="input-group-addon" id="basic-addon2">KM</span>
+			</div>
+		</div>
+		<h4>Stanje</h4>
+		<div class="form-group">
+		  <select class="form-control" ng-model="oglasCtrl.oglas.stanje">
+ 		    <option value="Useljivo">Useljivo</option>
+ 		    <option value="Potrebno renoviranje">Potrebno renoviranje</option>
+ 		    <option value="U izgradnji">U izgradnji</option>
+ 		    <option value="Uređeno">Uređeno</option>
+ 		    <option value="Održavano">Održavano</option>
+ 		    <option value="Nije održavano">Nije održavano</option>
+  		  </select>
+		</div>
+		<h4>Lokacija</h4>
+		<div class="form-group">
+		  <select class="form-control" ng-model="oglasCtrl.oglas.drzava">
+		  	<option value="" selected disabled>Država</option>
+		    <option value="Bosna i Hercegovina">Bosna i Hercegovina</option>
+		    <option value="Srbija">Srbija</option>
+		    <option value="Crna Gora">Crna Gora</option>
+		    <option value="Hrvatska">Hrvatska</option>
+		  </select>
+		</div>
+		<div class="form-group">
+        	<input type="text" class="form-control" ng-model="oglasCtrl.oglas.grad" placeholder="Grad"/>
+	     </div>
+	     <div class="form-group">
+	        <input type="text" class="form-control" ng-model="oglasCtrl.oglas.adresa" placeholder="Adresa"/>
+	     </div>
+	     <h4>Dodatne informacije</h4>
+	     <div class="form-group">
+	     	<label class="checkbox-inline">
+			  <input type="checkbox" ng-model="oglasCtrl.oglas.voda" ng-true-value="1" ng-false-value="0"> Voda
+			</label>
+			<label class="checkbox-inline">
+			  <input type="checkbox" ng-model="oglasCtrl.oglas.struja" ng-true-value="1" ng-false-value="0"> Struja
+			</label>
+			<label class="checkbox-inline">
+			  <input type="checkbox" ng-model="oglasCtrl.oglas.grijanje" ng-true-value="1" ng-false-value="0"> Centralno grijanje
+			</label>
+			</div>
+			<div class="form-group">
+			<label class="checkbox-inline">
+			  <input type="checkbox" ng-model="oglasCtrl.oglas.internet" ng-true-value="1" ng-false-value="0"> IT mreža
+			</label>
+			<label class="checkbox-inline">
+			  <input type="checkbox" ng-model="oglasCtrl.oglas.kablovska" ng-true-value="1" ng-false-value="0"> Kablovska televizija
+			</label>
+			</div>
+			<div class="form-group">
+			<label class="checkbox-inline">
+			  <input type="checkbox" ng-model="oglasCtrl.oglas.telefon" ng-true-value="1" ng-false-value="0"> Telefonska instalacija
+			</label>
+			<label class="checkbox-inline">
+			  <input type="checkbox" ng-model="oglasCtrl.oglas.garaza" ng-true-value="1" ng-false-value="0"> Garaža
+			</label>
+			</div>
+			<h4>Fotografije</h4>
+				<div class="form-group">
+					<div id="button_slika1" class="btn btn-primary btn-sm btn-block" ng-model="picFile" ngf-select="uploadFiles($files)" multiple>Ucitaj fotografije</div>
+          
+    				<ul>
+        			<li ng-repeat="f in files" style="font:smaller">
+            		{{f.name}}
+								
+        			</li>
+    				</ul>
+					<br>
+						
+          
+		    </div>
+		   <input type="submit" value="Objavi oglas" class="btn btn-primary btn-lg btn-block"/>
+	     </div>
+	     
+      	</form>
+      </div>
+  	</div>
+  	</div>
+  </div>
+</div>
+</section>

@@ -1,0 +1,22 @@
+<section class="section-password-reset">
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="form-container">
+      <form name="resetForm" role="form" ng-controller="ResetController as resetCtrl" ng-submit="resetForm.$valid && resetCtrl.resetPass()" novalidate>
+      <p>Link za potvrdu ce biti poslan na Vas e-mail</p>
+      <div class="form-group">
+        <input type="email" name="email" class="form-control" ng-model="resetCtrl.user.email" placeholder="E-mail"required />
+        <div class="form-error" ng-show="resetForm.email.$invalid && resetForm.email.$dirty">
+          <small>E-mail adresa nije validna</small>
+        </div>
+        <div class="form-error" ng-show="resetForm.$submitted && resetForm.email.$error.required">
+            <small>E-mail adresa je obavezna</small>
+          </div>
+        </div>
+      <input type="submit" value="Promijeni lozinku" class="btn btn-primary btn-lg btn-block" value="Submit Review" />
+    </form>
+    </div>
+    <a href="#login">Nazad na prijavu</a>
+  </div>
+  </div>
+</section>

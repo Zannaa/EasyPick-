@@ -1,0 +1,52 @@
+
+
+
+<div class="container">
+           <img ng-src="{{korisnik.slika1}}" ng-show=korisnik.slika1!=NULL class="img-circle slika" alt="Cinque Terre" width="204" height="136">
+  <table class="table"  style="width: 400px">
+   
+    <tbody>
+      <tr  class="success">
+        <td>Ime i prezime:</td>
+        <td>{{korisnik.name}}</td>
+      </tr>
+      <tr class="success">
+        <td>Email:</td>
+        <td>{{korisnik.email}}</td>
+      </tr>
+    <tr class="info">
+        <td>Datum registracije:</td>
+        <td>{{korisnik.created_at}}</td>
+      </tr> 
+        <tr class="info">
+        <td>Verifikovan:</td>
+        <td ng-show=korisnik.verifikovan==1>Da</td>
+        <td ng-show=korisnik.verifikovan==0>Ne</td>
+      </tr>
+      <tr class="warning">
+      <td>Adminitrator:</td>
+        <td ng-show=korisnik.admin==1>Da</td>
+        <td ng-show=korisnik.admin==0>Ne</td>
+      </tr>
+      <tr class="warning">
+        <td>Ban:</td>
+          <td ng-show=korisnik.ban==1>Da</td>
+        <td ng-show=korisnik.ban!=1>Ne</td>
+      </tr>
+       <tr class="danger">
+        <td>Telefon:</td>
+        <td>{{korisnik.telefon}}</td>
+      </tr>
+       <tr class="danger">
+        <td>Drzava:</td>
+        <td>{{korisnik.drzava}}</td>
+      </tr>
+       <tr class="danger">
+        <td>Grad:</td>
+        <td>{{korisnik.grad}}</td>
+      </tr> 
+
+    </tbody>
+  </table>
+</div>
+

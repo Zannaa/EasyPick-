@@ -1,0 +1,58 @@
+
+<div id="content">
+<header>
+<p class="pull-left">Svi korisnici</p> 
+ <a ng-href="#dodajkorisnika" type="button" class="btn btn-success btn-xs pull-right">Dodaj korisnika</a>
+ </header>
+<br><br><br>
+<div>
+
+
+<div class="row">
+
+	<div class="col-md-3">
+     Ime i prezime
+      </div>
+
+      <div class="col-md-3">
+     Datum registracije
+      </div>
+       <div class="col-md-5">
+     Akcije
+      </div>
+   <hr>
+
+</div>
+
+<div class="row" ng-repeat="korisnik in korisnici.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+	
+       <div class="col-md-3">
+     <p> {{korisnik.name}}</p>
+     
+      </div>
+       <div class="col-md-3">
+     <p> {{korisnik.created_at}}</p>
+     
+      </div>
+     
+      <div class="col-md-5">
+      <a class="btn btn-primary btn-xs " ng-href="#korisnik/{{korisnik.id}}" role="button">Vidi&nbsp&nbsp&nbsp </a>
+       <a class="btn btn-success btn-xs " ng-href="#uredikorisnika/{{korisnik.id}}" role="button">Uredi </a>
+        <button class="btn btn-warning btn-xs " ng-click=odbanujkorisnika(korisnik.id) ng-show=korisnik.ban==1>Odobri </button>
+         <button class="btn btn-warning btn-xs " ng-click=banujkorisnika(korisnik.id) ng-show=korisnik.ban!=1>Banuj </button>
+          <button class="btn btn-danger btn-xs " ng-click=izbrisikorisnika(korisnik.id)>Izbrisi </button>
+      
+      </div>
+
+
+
+
+
+
+
+</div>
+<hr>
+</div>
+<div>
+<uib-pagination boundary-links="true" total-items="totalItems"  items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm pozicijapaginacije" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+</div>

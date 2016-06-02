@@ -1,0 +1,185 @@
+.oko { 
+
+ vertical-align: middle;
+ 
+ display: block;
+
+    margin-left: auto;
+
+ }
+
+.povrsina {
+  display: inline-block;
+   
+
+  vertical-align: middle;
+  margin-bottom: -15%;
+
+
+}
+
+#pov{
+
+  margin-left: 18%;
+    margin-top: -3%;
+
+}
+
+#cijena {
+
+  font-size: 18px;
+    color: #00004d;
+    
+
+     font-weight: bold;
+     margin-bottom: -10%;
+
+
+}
+
+.price {
+margin-left: 20%;
+   margin-bottom: -20%;
+   color:red;
+}
+
+.p {
+  margin-left:73%;
+ margin-bottom: -5%;
+  font-size: 20px;
+}
+.povrsina {
+  margin-top: -9%;
+  margin-left:10%;
+}
+
+#cijena2{
+  font-size: 30px;
+    color: #00004d;
+    font-weight: bold;
+    margin-left:70%;
+     margin-top: -5%;
+}
+h1{color: #00004d;
+}
+.panelzana {
+
+  max-width:55%;
+}
+
+
+.center-grey{
+       background:#f2f2f2;
+}
+.slider{
+  position: relative;
+  padding:5px;
+  width:610px;
+  margin: auto;
+  margin-top: 40px;
+}
+.slide{
+  position:absolute;
+  top:0;
+  left:0;
+  box-shadow: 0px 0px 15px #999;
+}
+
+.arrows{
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.arrows img{
+  height: 32px;
+}
+
+h1{
+text-align: center;
+padding: 10px;
+font-size: 40px;
+color: #222;
+}
+ 
+.slide.ng-hide-add, .slide.ng-hide-remove {
+  -webkit-transition:all linear 0.5s;
+  -moz-transition:all linear 0.5s;
+  -o-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+  display:block!important;
+}
+ 
+.slide.ng-hide-add.ng-hide-add-active,.slide.ng-hide-remove {
+  opacity:0;
+}
+ 
+.slide.ng-hide-add,.slide.ng-hide-remove.ng-hide-remove-active {
+  opacity:1;
+}
+
+#slike {
+margin-right:auto;
+margin-right: auto;
+
+
+}
+
+.dugme 
+{ margin-left:72%;
+ 
+
+ }
+
+ .panell {
+ margin-left:60%;
+ margin-top:-58.2%;
+
+ }
+
+ .tekst {
+
+  font-size: 20px;
+ }
+
+ .naslov{color: #00004d;
+  font-weight: bold;
+    font-size: 23px;}
+
+ .datum {
+   font-size: 13px;
+
+ }
+
+ .thumbnail
+ {
+  width:400px;
+  height:300px;
+ }
+
+
+ #pozicija {
+width:250px;
+height:200px;
+
+ }
+
+ .navbar-nav>li>a {
+ color : #00b3ca!important;
+}
+
+.glavna {
+ background-color:#f3f3f4;
+}
+
+.menuboja{
+  background-color:#2f4050;
+
+}
+.navbar-header>a,.navbar-nav>li>a#odj {
+  color:#f3f3f4!important;
+}
+.navbar-header>a:hover,.navbar-nav>li>a:hover, .navbar-nav>li>a:hover#odj
+{
+ color:black!important;
+}

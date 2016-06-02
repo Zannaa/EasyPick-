@@ -1,0 +1,50 @@
+<section id="inbox">
+  <div class="container">
+      <div class="col-md-3">
+        <div class="box">
+          <div ng-repeat="poruka in poruke">
+    			<a href="" ng-click="dajPoruke(poruka.korisnik1_id,poruka.korisnik2_id)">
+    			<div class="osoba">
+                <div class="col-md-12">
+                <h5 ng-if="friend(poruka.korisnik1_id)">{{poruka.korisnik1_name}}</h5>
+                <h5 ng-if="friend(poruka.korisnik2_id)">{{poruka.korisnik2_name}}</h5>
+                <p>{{poruka.tekst}}</p>
+                </div>
+              </div>
+          </a>
+          </div>     
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="box">
+        <div ID="messagesBox" ng-show="showMessageBox">
+
+      
+            <div class="recenzija" ng-repeat="poruka in messages">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+              <img src="" alt="">
+              <p>{{poruka.korisnik1_name}}</p>
+            </div>
+            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+              <div class="bubble">
+                <small>{{poruka.created_at}}</small>
+                <h5>{{poruka.tekst}}</h5>
+              </div>
+            </div>
+          </div>
+       
+
+         <section id="ocjena">
+            <div class="ocjena-forma">
+              <form role="form" ng-submit="posalji()" novalidate>
+               <div class="form-group">
+                <textarea class="form-control" rows="5" ng-model="poruka.tekst" placeholder="Type new message"></textarea>
+                <button type="submit" class="btn btn-default">Posalji</button>
+              </div>
+              </form>
+            </div>
+          </section>
+        </div>
+        </div>
+      </div>
+  </div>

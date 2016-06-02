@@ -1,0 +1,60 @@
+html, body {
+font-family:"open-sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+background-color:#f3f3f4;
+color:#676a6c;
+
+
+}
+
+.side-menu {
+
+	background-color:#2f4050;
+	padding:0px;
+}
+
+.side-menu h1 {
+color:#1f3647;
+text-align:center;
+margin:10px 0px;
+font-size:25px;
+
+}
+
+ .display-table {
+	
+	padding:0px;
+	  min-width: 0; 
+    width: 100%; 
+} 
+
+ .display-table-row{
+	
+	  min-width: 0; 
+    width: 100%; 
+}   
+
+. display-table-cell{
+
+
+float:none;
+
+}
+
+#content {
+	background-color: white;
+	margin: 20px 0px 50px 0px;
+	padding:5px;
+	border-top:4px #e7eaec solid;
+}
+
+.slika {
+
+	padding:15px;
+}
+
+.size {
+height: 90%px;
+width:90%;
+
+}
+

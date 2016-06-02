@@ -1,0 +1,26 @@
+ 
+    <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="form-container">
+        <form name="messageForm" role="form" ng-controller="porukaController as porukaCtrl" ng-submit="messageForm.$valid && porukaCtrl.posalji()" novalidate>
+
+        <div class="form-group">
+          <textarea name="poruka" class="form-control" ng-model="porukaCtrl.poruka.tekst" placeholder="Unesite tekst.." required ></textarea>
+          <div class="form-error" ng-show="messageForm.$submitted && messageForm.poruka.$error.required">
+            <small>Morate unijeti tekst!</small>
+          </div>
+        </div>
+             
+        
+        <input type="submit" value="Posalji" class="btn btn-primary btn-lg btn-block" />
+        
+        <div class="form-error"  ng-show="messageForm.$submitted">
+            Poruka poslana!
+        </div>
+      </form>
+      </div>  
+ 
+    </div>
+    </div>
+    
+  

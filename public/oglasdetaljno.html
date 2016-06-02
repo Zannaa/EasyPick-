@@ -1,0 +1,134 @@
+
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<script src="http://code.angularjs.org/1.2.9/angular.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<script src="http://code.angularjs.org/1.2.9/angular-animate.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/oglas.css" />
+<script type="text/javascript" src="js/navigacija.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+
+
+
+  <div style="height: 305px">
+    <uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+      <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
+        <cl-image  public-id="{{slide.image}}" style="margin:auto;"></cl-image>
+        <div class="carousel-caption">
+          <h4>Slika {{slide.id+1}}</h4>
+         <!-- <p>{{slide.text}}</p> !-->
+        </div>
+      </uib-slide>
+    </uib-carousel>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+     
+      <div class="checkbox">
+        <label>
+        
+        </label>
+      </div>
+    </div> 
+    <div class="col-md-6">
+      
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </div>
+  </div>  
+</div>
+
+
+
+<div class="panel panel-default panelzana">
+  <div class="panel-heading">
+    <h3 class="panel-title"><h1>{{detaljno.oglas.naziv}}</h1></h3>
+  </div>
+  <div class="panel-body tekst">
+  
+        <p><a href="#">{{detaljno.autor.name}} </a></p> <p class="datum"> {{detaljno.oglas.datum_objave}}</p>
+
+        <p id="cijena2">  {{detaljno.oglas.cijena}}{{" KM"}}</p>
+         <!--<img class="povrsina" src="images/povrsina.png">!-->
+        <p class="p">Površina:{{detaljno.oglas.povrsina}}{{"m²"}}</p>
+        <br><br><br>
+        <p>Status : {{detaljno.oglas.status_oglasa}}
+        &nbsp &nbsp &nbsp &nbsp &nbsp Stanje : {{detaljno.oglas.stanje}}</p>
+
+        <p class="naslov">Lokacija:</p>
+        <p>Država: {{detaljno.lokacija.drzava}}</p>
+        <p>Grad: {{detaljno.lokacija.grad}} </p>
+        <p>Adresa: {{detaljno.lokacija.adresa}}</p>
+
+        <!--<p>Centralno grijanja: {{detaljno.oglas.grijanje}}</p>
+        <p>Struja:{{detaljno.oglas.struja}}</p>
+        <p>Voda :{{detaljno.oglas.voda}}</p>
+        <p>Telefon:{{detaljno.oglas.telefon}}</p>
+        <p>Kablovska:{{detaljno.oglas.kablovska}}</p>
+        <p>Internet:{{detaljno.oglas.internet}}</p>
+        <p>Garaža:{{detaljno.oglas.garaza}}</p> !-->
+        <p class="naslov">Dodatne informacije: </p>
+        <div>
+
+        
+        
+        <label class="checkbox-inline"><input type="checkbox" ng-model="detaljno.oglas.struja"  ng-true-value=1 ng-false-value=0 value="">Struja</label>
+        
+        
+        <label class="checkbox-inline"><input type="checkbox" ng-model="detaljno.oglas.voda"  ng-true-value=1 ng-false-value=0 value="">Voda</label>
+        <label class="checkbox-inline"><input type="checkbox" ng-model="detaljno.oglas.grijanje"  ng-true-value=1 ng-false-value=0 value="">Centralno grijanje</label>
+        </div>
+        <br>
+        
+       
+        <div>
+
+        <label class="checkbox-inline"><input type="checkbox"  ng-model="detaljno.oglas.internet"  ng-true-value=1 ng-false-value=0  value="">IT mreža</label>
+        
+        <label class="checkbox-inline"><input type="checkbox" ng-model="detaljno.oglas.kablovska"  ng-true-value=1 ng-false-value=0  value="">Kablovksa televizija</label>
+        
+        </div>
+        <br>
+        <div>
+         <label class="checkbox-inline"><input type="checkbox" ng-model="detaljno.oglas.telefon"  ng-true-value=1 ng-false-value=0  value="">Telefonska instalacija</label>
+        
+        <label class="checkbox-inline"><input type="checkbox" ng-model="detaljno.oglas.garaza"  ng-true-value=1 ng-false-value=0  value="">Garaža</label>
+        </div>
+        <p class="naslov">Detaljan opis:</p>
+        {{detaljno.oglas.opis}}
+
+
+
+
+    </div> </div>
+    
+ 
+ <div class="panel panel-default panelzana panell">
+  <div class="panel-heading">
+    <h3 class="panel-title naslov"> Ostavite poruku autoru</h3>
+  </div>
+  <div class="panel-body">
+  
+  <div class="form-group">
+  <div class="form-group">
+  <p class="tekst"> {{detaljno.autor.name}}</p>
+  <p class="tekst">{{detaljno.autor.email}}</p>
+  <p class="tekst">061499300</p>
+  <br><br><br>
+</div>
+<p></p>
+  <label for="comment" class="tekst">Sadržaj:</label>
+  <textarea class="form-control" rows="5" id="comment" ng-model="sadrzaj"></textarea>
+</div>
+<button type="button" class="btn btn-primary dugme"   ng-click='posaljiporuku(detaljno.autor.id)' >Pošalji poruku</button>
+  </div>
+</div>
+
+
+</body>
+</html>

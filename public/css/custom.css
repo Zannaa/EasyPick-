@@ -1,0 +1,239 @@
+html,
+body {
+    height: 100%;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: #eeeeee;
+}
+
+header{
+	width: 100%;
+}
+
+nav button{
+    margin: 15px 0px;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+/*.head-default {
+    background: url(../images/header_bg.jpg) no-repeat;
+    background-position: 0px -275px;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 420px;
+    margin-bottom: 30px;
+}
+
+.header-mask{
+	width: 100%;
+    min-height: 420px;
+    background: linear-gradient( 0deg, white 70%, gray );
+    position: absolute;
+    opacity: 0.1;
+} */
+
+.navbar{
+	/*background: transparent;*/
+    border-bottom: 0 none;
+}
+
+.ng-invalid.ng-dirty {
+  border-color: #FA787E;
+}
+
+.ng-valid.ng-dirty {
+  border-color: #78FA89;
+}
+
+.section-login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -225px 0 0 -180px;
+    width: 360px;
+    height: 450px;
+    text-align: center;
+}
+
+.section-password-reset {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -225px 0 0 -180px;
+    width: 360px;
+    height: 450px;
+    text-align: center;
+}
+
+.section-registration {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -225px 0 0 -180px;
+    width: 360px;
+    height: 450px;
+    text-align: center;
+}
+
+.g-recaptcha{
+    margin-bottom: 15px;
+
+}
+
+.form-container{
+    margin-bottom: 15px;
+}
+
+.form-error{
+    text-align: center;
+}
+
+.form-error small{
+    color: red;
+    
+}
+
+/* Responsive Styles */
+
+@media(max-width:991px) {
+    .customer-img,
+    .img-related {
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width:767px) {
+    .img-portfolio {
+        margin-bottom: 15px;
+    }
+
+    header.carousel .carousel {
+        height: 70%;
+    }
+}
+
+/* line 614, ../sass/style.scss */
+section#ocjena {
+  color: #6A6A6A;
+  margin: 0px 25px 20px 10px;
+}
+
+/* line 632, ../sass/style.scss */
+section#ocjena .ocjena-forma {
+  background: #F4F4F4;
+  width: 100%;
+  min-height: 220px;
+  text-transform: uppercase;
+  font-size: 15px;
+  padding: 25px 0px;
+}
+/* line 640, ../sass/style.scss */
+section#ocjena .form-group {
+  margin: 12px 10px;
+}
+/* line 643, ../sass/style.scss */
+section#ocjena .form-group textarea {
+  width: 100%;
+  resize: none;
+}
+/* line 649, ../sass/style.scss */
+section#ocjena .btn-default {
+  color: #FFF;
+  background-color: #649f4d;
+  border: none;
+  float: right;
+  text-transform: uppercase;
+  padding: 8px 35px;
+  margin-top: 10px;
+}
+
+/* line 697, ../sass/style.scss */
+.recenzija {
+  min-height: 135px;
+  margin: 15px;
+  border-bottom: #F4F4F4 1px solid;
+  text-align: center;
+  color: #6A6A6A;
+}
+/* line 704, ../sass/style.scss */
+.recenzija img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+/* line 710, ../sass/style.scss */
+.recenzija .bubble {
+  width: 100%;
+  padding: 0px;
+  background: #F4F4F4;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  text-align: left;
+}
+/* line 721, ../sass/style.scss */
+.recenzija .bubble:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 15px 18px 15px 0;
+  border-color: transparent #F4F4F4;
+  display: block;
+  width: 0;
+  z-index: 1;
+  left: 0px;
+  top: 15px;
+}
+/* line 734, ../sass/style.scss */
+.recenzija small {
+   padding: 8px 15px;
+   margin: 10px 20px 0px;
+   display: inline-block;
+   position: absolute;
+   bottom: 0px;
+   right: 0px;
+}
+/* line 741, ../sass/style.scss */
+.recenzija h5 {
+  display: inline-block;
+  margin: 20px;
+}
+
+section#inbox{
+    margin: 15px 0px;
+}
+
+section#inbox .osoba{
+   border-bottom: 2px solid #eff3fa;
+   min-height: 62px;
+}
+
+section#inbox .osoba img{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    margin: 5px;
+}
+
+section#inbox .osoba h5{
+    width: 100%;
+    color: #31708f;
+    text-transform: uppercase;
+    line-height: 20px;
+    vertical-align: middle;
+    letter-spacing: .5px;
+}
+
+section#inbox .box{
+  min-height: 400px;
+  max-height: 600px;
+  overflow-y: scroll;
+}
+

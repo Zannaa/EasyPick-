@@ -1,0 +1,38 @@
+<br><section class="section-registration">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="form-container">
+        <form name="regForm" role="form" ng-controller="AUrediController as loginCtrl" ng-submit="regForm.$valid && register()" novalidate>
+         <button ng-click=dodajadmina(user.id)  class="btn btn-danger btn-xs pull-right" ng-show=user.admin!=1>Dodaj kao administratora</button>
+          <button ng-click=oduzmiadmina(user.id)  class="btn btn-danger btn-xs pull-right" ng-show=user.admin==1>Ukloni kao administratora</button><br><br>
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" ng-model="user.name"  required />
+          <div class="form-error" ng-show="regForm.$submitted && regForm.name.$error.required">
+            <small>Unesite ime</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="email" name="email" class="form-control" ng-model="user.email" ng-readonly="1==1" required />
+          <div class="form-error" ng-show="regForm.email.$invalid && regForm.email.$dirty">
+            <small>E-mail adresa nije validna</small>
+          </div>
+          <div class="form-error" ng-show="regForm.$submitted && regForm.email.$error.required">
+            <small>E-mail adresa je obavezna</small>
+          </div>
+        </div>
+        <div class="form-container" ng-show="tip!=0">
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="user.drzava" placeholder="Država"/>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" ng-model="user.grad" placeholder="Grad"/>
+          </div>
+          <input type="text" class="form-control" ng-model="user.telefon" placeholder="Telefon"/>
+        </div><br><br>
+        <p>
+        <input type="submit" value="Promijeni" class="btn btn-primary  btn-block" />
+        </p>
+      </form>
+     
+  </div>
+</section> 

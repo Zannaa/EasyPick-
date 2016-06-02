@@ -82,11 +82,13 @@ Route::get('korisnici/verifikuj/{konfirmacijski_kod}', 'KorisnikController@verif
 */
 
 Route::group(['middleware' => ['web']], function () {
+
     Route::get('/', function () {
 
-        echo 'hello';
+        return view('app');
 
     });
+
 
 
     Route::post('prijava', 'KorisnikController@login');

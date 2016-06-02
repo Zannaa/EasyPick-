@@ -1,0 +1,68 @@
+<div class="frame" ng-controller="KorisnikController as korisnikCtrl">    
+    <div class="container-fluid">
+        
+        <div class="frame_header">
+            <cl-image  public-id="{{korisnikCtrl.korisnik.slika1}}" class="korisnik_slika"></cl-image>
+            <div class="info">
+                <p class="ime">{{korisnikCtrl.korisnik.name}}</p>
+                <p>Email: {{korisnikCtrl.korisnik.email}}</p>
+                <p>Telefon: {{telefon}}</p>
+                <p>Lokacija: {{lokacija}}</p>
+                <p>Datum registracije: {{korisnikCtrl.korisnik.created_at}}</p>
+            </div>
+            <div class="info_dodatno">
+                <strong ng-style="verifikacija">Verifikovan<br></strong>
+                <strong ng-style="admin">Admin<br></strong>
+                <strong ng-style="ban">Ban<br></strong>
+                <button type="button" class="button" ng-click="showTheForm=!showTheForm">Posalji poruku!</button>
+            </div> 
+        </div>
+        
+        <section class="section-message" ng-show="showTheForm">
+            <message-form ></message-form>
+        </section>
+        
+        <div class="oglasi" ng-controller="KorisnikOglasiController as KOCtrl">
+            <p class="broj_oglasa">Korisnik je objavio ukupno {{KOCtrl.oglasi.length}} oglasa.</p>
+            <div class="panel panel-default" ng-repeat="oglas in KOCtrl.oglasi">
+                <div class="panel-body">
+                    <div class="oglas_naziv"><strong>{{oglas.naziv}}</strong></div>
+                    <img ng-src="{{oglas.slika1}}" alt="" class="img-thumbnail" id="slika_oglasa">
+                    
+                    <div class="oglas_mini">
+                        
+                        <div class="oglas_tip">Tip oglasa: {{oglas.tip_oglasa}}</div>
+                        <div class="oglas_povrsina">Povrsina: {{oglas.povrsina}} m²</div>
+                        <div class="oglas_povrsina">Status oglasa: {{oglas.status_oglasa}}</div>
+                        <div class="oglas_datum">Oglas objavljen: {{oglas.datum_objave | date:"dd/MM/yyyy"}}</div>
+                        
+                    </div>
+                    <div class="oglas_cijena">{{oglas.cijena}} KM</div>
+                    <a href="" class="oglas_detaljnije">Pogledaj detaljnije</a>
+                </div>
+            </div>
+        </div>
+        <div class="favoriti" ng-controller="KorisnikFavoritiController as KFCtrl">
+            <p class="broj_favorita">Korisnik ima ukupno {{KFCtrl.oglasi.length}} favorita.</p>
+            <div class="panel panel-default" ng-repeat="oglas in KFCtrl.oglasi">
+                <div class="panel-body">
+                    <div class="oglas_naziv"><strong>{{oglas.naziv}}</strong></div>
+                    <img ng-src="{{oglas.slika1}}" alt="" class="img-thumbnail" id="slika_oglasa">
+                    <div class="oglas_mini">
+                        <div class="oglas_tip">Tip oglasa: {{oglas.tip_oglasa}}</div>
+                        <div class="oglas_povrsina">Povrsina: {{oglas.povrsina}} m²</div>
+                        <div class="oglas_povrsina">Status oglasa: {{oglas.status_oglasa}}</div>
+                        <div class="oglas_datum">Oglas objavljen: {{oglas.datum_objave | date:"dd/MM/yyyy"}}</div>                            
+                    </div>
+                    <div class="oglas_cijena">{{oglas.cijena}} KM</div>
+                    <a href="" class="oglas_detaljnije">Pogledaj detaljnije</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+    
+  
+  
+

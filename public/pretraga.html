@@ -1,0 +1,78 @@
+<section id="pretraga">
+<!--forma za pretragu-->
+<div class="col-md-2">
+<form>
+	<h4>Površina</h4>
+	<div class="form-group">
+		<div class="input-group">
+		  <input type="number" class="form-control" ng-model="min_povrsina" aria-describedby="basic-addon2" placeholder="od">
+		  <span class="input-group-addon" id="basic-addon2">m2</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+		  <input type="number" class="form-control" ng-model="max_povrsina" aria-describedby="basic-addon2" placeholder="do">
+		  <span class="input-group-addon" id="basic-addon2">m2</span>
+		</div>
+	</div>
+	<h4>Cijena</h4>
+	<div class="form-group">
+		<div class="input-group">
+		  <input type="number" class="form-control" ng-model="min_cijena" aria-describedby="basic-addon2" placeholder="od">
+		  <span class="input-group-addon" id="basic-addon2">KM</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="input-group">
+		  <input type="number" class="form-control" ng-model="max_cijena" aria-describedby="basic-addon2" placeholder="do">
+		  <span class="input-group-addon" id="basic-addon2">KM</span>
+		</div>
+	</div>
+	<div class="form-group">
+	  <select class="form-control" ng-model="search.tip_oglasa">
+	  	<option value="" selected disabled>Kategorija</option>
+	    <option value="Kuca">Kuća</option>
+	    <option value="Stan">Stan</option>
+	    <option value="Soba">Soba</option>
+	  </select>
+	</div>
+	<div class="form-group">
+	  <select class="form-control" ng-model="search.stanje">
+	  	<option value="" selected disabled>Stanje</option>
+  		<option value="Useljivo">Useljivo</option>
+	    <option value="Potrebno renoviranje">Potrebno renoviranje</option>
+	    <option value="U izgradnji">U izgradnji</option>
+	    <option value="Uređeno">Uređeno</option>
+	    <option value="Održavano">Održavano</option>
+	    <option value="Nije održavano">Nije održavano</option>
+	  </select>
+	</div>
+</form>
+</div>
+<!--rezultati pretrage-->
+<div class="col-md-10">
+	<div   class="row" ng-controller="prikazioglasController as prikazi">
+	<div ng-repeat="oglas in prikazi.oglasi.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))"  class="col-sm-2 col-md-4">
+    <div class="thumbnail"  >
+      <cl-image  public-id="{{oglas.slika1}}" class="img-thumbnail" id="pozicija" ></cl-image>
+      <div class="caption">
+        <a ng-href='#/oglas/{{oglas.id}}' ><h4>{{oglas.naziv}} </h4> </a>
+
+        
+        
+        <p class="pull-left">Površina: {{oglas.povrsina}}{{"m²"}}</p><br>
+        <p id="cijena" class="pull-right">  {{oglas.cijena}}{{" KM"}}</p>
+        
+        
+        
+      <!--  <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>  !-->
+      </div>
+    </div>
+  </div>
+</div>
+ 
+	<div>
+	<uib-pagination boundary-links="true" total-items="totalItems"  items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm pozicijapaginacije" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+	</div>
+
+</section>
